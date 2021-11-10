@@ -1,4 +1,4 @@
-package com.example.backend.ontology.model;
+package com.example.backend.ontology.verb;
 
 import com.example.backend.ontology.statement.Statement;
 import lombok.*;
@@ -11,18 +11,17 @@ import java.util.List;
 @ToString
 @Builder
 @Entity
-@Table(name = "models")
+@Table(name = "verbs")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Model {
+public class Verb {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
-    private String name;
+    private String verb;
 
-    @OneToMany(mappedBy = "model")
+    @OneToMany(mappedBy = "predicate")
     private List<Statement> statements;
 }

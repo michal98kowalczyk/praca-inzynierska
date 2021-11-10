@@ -1,6 +1,6 @@
-package com.example.backend.ontology.model;
+package com.example.backend.ontology.namespace;
 
-import com.example.backend.ontology.statement.Statement;
+import com.example.backend.ontology.resource.Resource;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,18 +11,17 @@ import java.util.List;
 @ToString
 @Builder
 @Entity
-@Table(name = "models")
+@Table(name = "namespaces")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Model {
+public class NameSpace {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
     private String name;
 
-    @OneToMany(mappedBy = "model")
-    private List<Statement> statements;
+    @OneToMany(mappedBy = "nameSpace")
+    private List<Resource> resources;
 }

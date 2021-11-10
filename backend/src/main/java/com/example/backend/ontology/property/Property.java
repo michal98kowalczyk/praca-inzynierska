@@ -1,28 +1,28 @@
-package com.example.backend.ontology.model;
+package com.example.backend.ontology.property;
 
 import com.example.backend.ontology.statement.Statement;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
 @ToString
 @Builder
 @Entity
-@Table(name = "models")
+@Table(name = "properties")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Model {
-
+public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
-    private String name;
+    private String key;
 
-    @OneToMany(mappedBy = "model")
-    private List<Statement> statements;
+    private String value;
+
+    @ManyToOne
+    @JoinColumn(name = "statement_id")
+    private Statement statement;
 }
