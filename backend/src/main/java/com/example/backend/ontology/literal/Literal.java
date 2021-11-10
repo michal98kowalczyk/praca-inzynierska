@@ -1,4 +1,4 @@
-package com.example.backend.ontology.model;
+package com.example.backend.ontology.literal;
 
 import com.example.backend.ontology.statement.Statement;
 import lombok.*;
@@ -11,18 +11,19 @@ import java.util.List;
 @ToString
 @Builder
 @Entity
-@Table(name = "models")
+@Table(name = "literals")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Model {
+public class Literal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
-    private String name;
+    private String value;
 
-    @OneToMany(mappedBy = "model")
+    private String dataType;
+
+    @OneToMany(mappedBy = "literal")
     private List<Statement> statements;
 }
