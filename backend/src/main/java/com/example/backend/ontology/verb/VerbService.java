@@ -27,6 +27,7 @@ public class VerbService {
     }
 
     public VerbWrapper convert(Verb verb) {
+        if(verb==null)return null;
         return VerbWrapper.builder().id(verb.getId()).verb(verb.getVerb()).build();
     }
 }
