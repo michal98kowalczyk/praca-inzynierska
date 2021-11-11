@@ -1,0 +1,50 @@
+
+    {
+        
+        "model": {"id":1,
+                    "name":"testt"},
+        "properties": [],
+        "literal":  {"id":1,
+                    "value":"testt",
+                    "dataType":"int"},
+        "subject":  {"id":1,
+                    "name":"testt",
+                    "namespace_id": 2},
+        "predicate":  {"id":1,
+                    "verb":"testt"},
+        "resource":  {"id":1,
+                    "name":"testt",
+                    "namespace_id": 2},
+        "probability": 0.8,
+        "res": false,
+        "lit": true
+    }
+
+
+
+
+
+____
+
+
+
+    {
+
+        "model": {
+                    "name":"testt"},
+        "properties": [{"key":"key1","value":"value1"},{"key":"key2","value":"value2"}],
+        "literal":  {
+                    "value":"testt",
+                    "dataType":"int"},
+        "subject":  {
+                    "name":"testt",
+                    "namespace_id": 2},
+        "predicate":  {
+                    "verb":"testt"},
+        "resource":  {
+                    "name":"testt",
+                    "namespace_id": 2},
+        "probability": 0.8,
+        "res": false,
+        "lit": true
+    }
