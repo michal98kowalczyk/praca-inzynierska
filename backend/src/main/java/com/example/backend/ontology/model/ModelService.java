@@ -78,5 +78,6 @@ public class ModelService {
 
     private Model getEntityToUpdate(Model current, Model modelToUpdate) {
         return Model.builder().id(current.getId()).name(modelToUpdate.getName()).build();
+
     }
 }

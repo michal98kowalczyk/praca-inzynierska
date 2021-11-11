@@ -109,17 +109,20 @@ public class StatementService {
     }
 
     public StatementOutputWrapper convert(Statement statement) {
-    StatementOutputWrapper statementOutputWrapper = new StatementOutputWrapper();
-    statementOutputWrapper.setId(statement.getId());
-    statementOutputWrapper.setSubject(resourceService.convert(statement.getSubject()));
-    statementOutputWrapper.setPredicate(verbService.convert(statement.getPredicate()));
-    statementOutputWrapper.setResource(resourceService.convert(statement.getResource()));
-    statementOutputWrapper.setIsRes(statement.isRes());
-    statementOutputWrapper.setLiteral(literalService.convert(statement.getLiteral()));
-    statementOutputWrapper.setIsLit(statement.isLit());
-    statementOutputWrapper.setProbablity(statement.getProbability());
-    statementOutputWrapper.setModelId(statement.getModel().getId());
-    statementOutputWrapper.setProperties(propertyService.convert(propertyService.getByStatementId(statement.getId())));
-    return statementOutputWrapper;
+        if (statement == null){
+            return null;
+        }
+        StatementOutputWrapper statementOutputWrapper = new StatementOutputWrapper();
+        statementOutputWrapper.setId(statement.getId());
+        statementOutputWrapper.setSubject(resourceService.convert(statement.getSubject()));
+        statementOutputWrapper.setPredicate(verbService.convert(statement.getPredicate()));
+        statementOutputWrapper.setResource(resourceService.convert(statement.getResource()));
+        statementOutputWrapper.setIsRes(statement.isRes());
+        statementOutputWrapper.setLiteral(literalService.convert(statement.getLiteral()));
+        statementOutputWrapper.setIsLit(statement.isLit());
+        statementOutputWrapper.setProbablity(statement.getProbability());
+        statementOutputWrapper.setModelId(statement.getModel().getId());
+        statementOutputWrapper.setProperties(propertyService.convert(propertyService.getByStatementId(statement.getId())));
+        return statementOutputWrapper;
     }
 }

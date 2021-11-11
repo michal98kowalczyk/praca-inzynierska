@@ -3,6 +3,7 @@ package com.example.backend.ontology.resource;
 import com.example.backend.ontology.literal.Literal;
 import com.example.backend.ontology.namespace.NameSpace;
 import com.example.backend.ontology.namespace.NameSpaceService;
+import com.example.backend.ontology.wrapper.LiteralWrapper;
 import com.example.backend.ontology.wrapper.ResourceWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,10 @@ public class ResourceService {
     }
 
     public ResourceWrapper convert(Resource resource) {
-        return ResourceWrapper.builder().id(resource.getId()).name(resource.getName())
-                .namespace(nameSpaceService.convert(resource.getNameSpace())).build();
+        if (resource != null){
+            return ResourceWrapper.builder().id(resource.getId()).name(resource.getName())
+                    .namespace(nameSpaceService.convert(resource.getNameSpace())).build();
+        }else
+            return null;
     }
 }

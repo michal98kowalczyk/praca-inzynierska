@@ -27,6 +27,10 @@ public class LiteralService {
     }
 
     public LiteralWrapper convert(Literal literal) {
-        return LiteralWrapper.builder().id(literal.getId()).value(literal.getValue()).dataType(literal.getDataType()).build();
+        if (literal != null){
+            return LiteralWrapper.builder().id(literal.getId()).value(literal.getValue()).dataType(literal.getDataType()).build();
+        }else
+            return null;
+
     }
 }

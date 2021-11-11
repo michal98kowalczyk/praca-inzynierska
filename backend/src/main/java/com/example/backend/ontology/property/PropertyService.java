@@ -24,8 +24,13 @@ public class PropertyService {
 
 
     public PropertyWrapper convert(Property property) {
-        return PropertyWrapper.builder().id(property.getId()).key(property.getKey()).value(property.getValue()).build();
+        if (property != null){
+            return PropertyWrapper.builder().id(property.getId()).key(property.getKey()).value(property.getValue()).build();
+        }else
+            return null;
     }
+
+    
 
     public List<PropertyWrapper> convert(List<Property> properties) {
         List<PropertyWrapper> propertyWrappers = new ArrayList<>();
