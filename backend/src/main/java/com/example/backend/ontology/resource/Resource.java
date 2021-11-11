@@ -24,7 +24,6 @@ public class Resource {
 
     private String name;
 
-//    private String nameSpace;
     @ManyToOne
     @JoinColumn(name = "namespace_id")
     private NameSpace nameSpace;

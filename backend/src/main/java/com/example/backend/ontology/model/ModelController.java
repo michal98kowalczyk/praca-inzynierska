@@ -1,5 +1,6 @@
 package com.example.backend.ontology.model;
 
+import com.example.backend.ontology.wrapper.ModelOutputWrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +21,36 @@ public class ModelController {
 
     @GetMapping("models")
     public ResponseEntity getModels() {
-        return modelService.getModels();
+        List<ModelOutputWrapper> modelOutputWrappers = modelService.getModels();
+
+        if (modelOutputWrappers.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }else{
+            return ResponseEntity.ok(modelOutputWrappers);
+        }
     }
 
     @GetMapping("model/{name}")
     public ResponseEntity getModel(@PathVariable("name") String name) {
-        return modelService.getModel(name);
+
+        ModelOutputWrapper modelOutputWrapper = modelService.getModel(name);
+        if (modelOutputWrapper == null){
+            return ResponseEntity.notFound().build();
+        }else{
+            return ResponseEntity.ok(modelOutputWrapper);
+        }
     }
 
 
     @PostMapping("model/add")
     public ResponseEntity<Model> addModel(@RequestBody Model model) {
-        return modelService.addModel(model);
+        Model created = modelService.addModel(model);
+        if(created == null){
+            return  ResponseEntity.unprocessableEntity().build();
+        }else{
+            return ResponseEntity.ok(created);
+        }
+
     }
 
     @PutMapping("model/{id}")

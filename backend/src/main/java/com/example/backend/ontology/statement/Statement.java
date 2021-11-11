@@ -26,7 +26,6 @@ public class Statement {
 
 
     @ManyToOne
-    @JoinColumn(name="model_id")
     private Model model;
 
     @OneToMany(mappedBy = "statement")
