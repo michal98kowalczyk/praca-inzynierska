@@ -20,7 +20,6 @@ const Main = () => {
     return (
 
         < main >
-            <button>Dodaj nowy model</button>
             <section><h1>Istniejace modele:</h1>
                 {/* <ModelList models={models} /> */}
                 {models !== null ? <ModelList models={models} /> : undefined}

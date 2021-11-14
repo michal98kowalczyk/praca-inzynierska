@@ -24,6 +24,7 @@ public class BackendApplication {
                 registry.addMapping("/api/namespace").allowedOrigins("http://localhost:3000");
                 registry.addMapping("/api/statements").allowedOrigins("http://localhost:3000");
                 registry.addMapping("/api/statements/add").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/api/model/{id}/statements").allowedOrigins("http://localhost:3000");
             }
         };
     }
