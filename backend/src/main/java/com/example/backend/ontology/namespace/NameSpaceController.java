@@ -16,12 +16,12 @@ public class NameSpaceController {
     private NameSpaceService nameSpaceService;
 
     @GetMapping("namespace")
-    public ResponseEntity getModels() {
+    public ResponseEntity getNamespaces() {
         return nameSpaceService.getNameSpaces();
     }
 
     @GetMapping("namespace/{name}")
-    public ResponseEntity getModel(@PathVariable("name") String name) {
+    public ResponseEntity getNamespace(@PathVariable("name") String name) {
         return nameSpaceService.getNameSpace(name);
     }
 }

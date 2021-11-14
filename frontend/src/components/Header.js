@@ -1,8 +1,16 @@
 import '../styles/Header.css';
+import { Link } from "react-router-dom";
 
 const Header = () => {
     return (
-        <header>header</header>
+        <header>
+            <h1>Ontology App</h1>
+            <nav><Link to="/" >Strona główna</ Link >
+                <Link to="/model/form" >Dodaj model</ Link >
+                <Link to="/statement/form" >Dodaj statement</ Link >
+            </nav>
+
+        </header>
     );
 }
 

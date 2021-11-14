@@ -43,6 +43,10 @@ public class StatementService {
         return statementRepository.findAll();
     }
 
+    public List<Statement> getStatementsByModelId(Long id) {
+        return  statementRepository.findAllByModelId(id);
+    }
+
     public Statement addStatement(Statement statement) {
 
         Model model = statement.getModel();
@@ -108,6 +112,8 @@ public class StatementService {
         return createdStatement;
     }
 
+
+
     public StatementOutputWrapper convert(Statement statement) {
         if (statement == null){
             return null;
@@ -125,4 +131,6 @@ public class StatementService {
         statementOutputWrapper.setProperties(propertyService.convert(propertyService.getByStatementId(statement.getId())));
         return statementOutputWrapper;
     }
+
+
 }

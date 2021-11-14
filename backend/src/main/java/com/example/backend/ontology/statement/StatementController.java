@@ -28,6 +28,18 @@ public class StatementController {
         }
     }
 
+    @GetMapping("model/{id}/statements")
+    public ResponseEntity getStatementsByModelId(@PathVariable Long id ) {
+        List<Statement> statements = statementService.getStatementsByModelId(id);
+        if (statements.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }else{
+            List<StatementOutputWrapper> statementOutputWrappers = new ArrayList<>();
+            statements.forEach(statement -> statementOutputWrappers.add(statementService.convert(statement)));
+            return ResponseEntity.ok(statementOutputWrappers);
+        }
+    }
+
     @PostMapping("statements/add")
     public ResponseEntity<StatementOutputWrapper> addStatement(@RequestBody Statement statement) {
         Statement res = statementService.addStatement(statement);
