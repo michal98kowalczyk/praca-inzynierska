@@ -8,4 +8,7 @@ import java.util.List;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property,Long> {
     List<Property> findAllByStatementId(Long statementId);
+
+    List<Property> findAllByKey(String key);
+    List<Property> findAllByValue(String value);
 }

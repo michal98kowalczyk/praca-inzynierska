@@ -48,3 +48,38 @@ ____
         "res": false,
         "lit": true
     }
+
+
+
+
+    {
+
+        "model": {
+                    "name":"testtest2"},
+        "properties": [{"key":"key1","value":"value1"},{"key":"key2","value":"value2"}],
+        "literal":  {
+                    "value":"testt",
+                    "dataType":"string"},
+        "subject":  {
+                    "name":"testt0",
+                    "nameSpace": {"name":"produkt"}},
+        "predicate":  {
+                    "verb":"testt"},
+        "resource":  {
+                    "name":"testt2",
+                    "nameSpace": {"name":"produk2t"}},
+        "probability": 0.8,
+        "res": false,
+        "lit": true
+    }
+
+
+
+    dla Resource
+    {
+        "name": "testChorowb",
+        "nameSpace": {
+            "name": "chorobaNow"
+        }
+
+        }
