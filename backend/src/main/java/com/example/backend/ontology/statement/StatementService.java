@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StatementService {
@@ -47,6 +48,14 @@ public class StatementService {
         return  statementRepository.findAllByModelId(id);
     }
 
+    public Statement getStatementById(String id) {
+
+        Optional<Statement> byId = statementRepository.findById(Long.parseLong(id));
+        if (byId.isPresent()){
+            return byId.get();
+        }
+        return null;
+    }
     public Statement addStatement(Statement statement) {
 
         Model model = statement.getModel();
