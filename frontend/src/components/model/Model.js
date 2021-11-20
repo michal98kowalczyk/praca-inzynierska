@@ -1,4 +1,4 @@
-import '../styles/Model.css';
+import '../../styles/model/Model.css';
 import { Link } from "react-router-dom";
 
 const Model = ({ id, name, statements }) => {

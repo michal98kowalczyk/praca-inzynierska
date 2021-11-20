@@ -43,24 +43,31 @@ public class ModelController {
 
 
     @PostMapping("model/add")
-    public ResponseEntity<Model> addModel(@RequestBody Model model) {
+    public ResponseEntity<ModelOutputWrapper> addModel(@RequestBody Model model) {
         Model created = modelService.addModel(model);
         if(created == null){
             return  ResponseEntity.unprocessableEntity().build();
         }else{
-            return ResponseEntity.ok(created);
+            return ResponseEntity.ok(modelService.getModelOutputWrapper(created));
         }
 
     }
 
     @PutMapping("model/{id}")
-    public ResponseEntity<Model> updateModel(@PathVariable("id") String id, @RequestBody Model modelToUpdate) {
-        return modelService.updateModel(id, modelToUpdate);
+    public ResponseEntity<ModelOutputWrapper> updateModel(@PathVariable("id") String id, @RequestBody Model modelToUpdate) {
+        Model model = modelService.updateModel(id, modelToUpdate);
+        if (model == null)return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(modelService.getModelOutputWrapper(model));
     }
 
     @DeleteMapping("model/{id}")
-    public ResponseEntity<Model> deleteModel(@PathVariable("id") String id) {
-        return modelService.deleteModel(id);
+    public ResponseEntity<ModelOutputWrapper> deleteModel(@PathVariable("id") String id) {
+        Model model = modelService.deleteModel(id);
+
+        if (model == null)return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(modelService.getModelOutputWrapper(model));
     }
 
 }

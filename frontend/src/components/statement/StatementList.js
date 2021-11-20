@@ -1,4 +1,4 @@
-import '../styles/StatementList.css';
+import '../../styles/statement/StatementList.css';
 import StatementItem from './StatementItem';
 
 const StatementList = (props) => {

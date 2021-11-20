@@ -1,7 +1,7 @@
-import '../styles/ModelDetails.css';
+import '../../styles/model/ModelDetails.css';
 import { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
-import StatementList from './StatementList';
+import StatementList from '../statement/StatementList';
 
 const ModelDetails = (props) => {
     const { id, name } = useParams();

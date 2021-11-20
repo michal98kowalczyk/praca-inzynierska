@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import '../styles/Main.css';
-import ModelList from './ModelList';
+import ModelList from './model/ModelList';
 
 const Main = () => {
 

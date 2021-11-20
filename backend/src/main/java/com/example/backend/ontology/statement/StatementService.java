@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -121,6 +122,45 @@ public class StatementService {
         return createdStatement;
     }
 
+    public List<Statement> addStatements(List<Statement> statements) {
+        List<Statement> saved = new ArrayList<>();
+
+        statements.forEach(statement -> saved.add(addStatement(statement)));
+        return  saved;
+    }
+
+    public Statement deleteStatement(String id) {
+        Optional<Statement> s = statementRepository.findById(Long.parseLong(id));
+        if (s.isEmpty()) {
+            return null;
+        }
+        propertyService.deleteProperties(s.get().getProperties());
+        statementRepository.delete(s.get());
+        return s.get();
+    }
+
+    public List<Statement>  deleteStatements(List<Statement> statements) {
+        List<Statement> res = new ArrayList<>();
+        statements.forEach(s -> res.add(deleteStatement(s.getId().toString())));
+        return res;
+    }
+
+
+
+    public Statement updateStatement(String id, Statement statementToUpdate) {
+        Optional<Statement> sCurrent = statementRepository.findById(Long.parseLong(id));
+        if (sCurrent.isPresent() ){
+            return statementRepository.save(getEntityToUpdate(sCurrent.get(),statementToUpdate));
+        }
+        return null;
+    }
+
+
+
+    private Statement getEntityToUpdate(Statement current, Statement statementToUpdate) {
+        current.setProbability(statementToUpdate.getProbability());
+        return current;
+    }
 
 
     public StatementOutputWrapper convert(Statement statement) {
@@ -140,6 +180,7 @@ public class StatementService {
         statementOutputWrapper.setProperties(propertyService.convert(propertyService.getByStatementId(statement.getId())));
         return statementOutputWrapper;
     }
+
 
 
 }

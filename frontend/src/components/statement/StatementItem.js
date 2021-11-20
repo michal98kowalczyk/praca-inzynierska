@@ -1,4 +1,4 @@
-import '../styles/StatementItem.css';
+import '../../styles/statement/StatementItem.css';
 
 
 

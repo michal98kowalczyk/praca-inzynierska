@@ -1,6 +1,8 @@
 package com.example.backend.ontology.statement;
 
 import com.example.backend.ontology.model.Model;
+import com.example.backend.ontology.resource.Resource;
+import com.example.backend.ontology.wrapper.ResourceWrapper;
 import com.example.backend.ontology.wrapper.StatementOutputWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,12 +42,41 @@ public class StatementController {
         }
     }
 
-    @PostMapping("statements/add")
+    @PostMapping("statement/add")
     public ResponseEntity<StatementOutputWrapper> addStatement(@RequestBody Statement statement) {
         Statement res = statementService.addStatement(statement);
         if (res == null){
             return ResponseEntity.unprocessableEntity().build();
         }
         return ResponseEntity.ok(statementService.convert(res));
+    }
+
+    @PostMapping("statements/add")
+    public ResponseEntity<List<StatementOutputWrapper>> addStatement(@RequestBody List<Statement> statements) {
+        List<Statement> s = statementService.addStatements(statements);
+        if (s == null){
+            return ResponseEntity.unprocessableEntity().build();
+        }
+        List<StatementOutputWrapper> lstSOW = new ArrayList<>();
+        s.forEach(st -> lstSOW.add(statementService.convert(st)));
+        return ResponseEntity.ok(lstSOW);
+    }
+
+    @DeleteMapping("statement/{id}")
+    public ResponseEntity<StatementOutputWrapper> deleteStatement(@PathVariable("id") String id) {
+        Statement s = statementService.deleteStatement(id);
+        if (s == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(statementService.convert(s));
+    }
+
+    @PutMapping("statement/{id}")
+    public ResponseEntity<StatementOutputWrapper> updateStatement(@PathVariable("id") String id, @RequestBody Statement statementToUpdate) {
+        Statement s = statementService.updateStatement(id, statementToUpdate );
+        if (s == null){
+            return ResponseEntity.unprocessableEntity().build();
+        }
+        return ResponseEntity.ok(statementService.convert(s));
     }
 }
