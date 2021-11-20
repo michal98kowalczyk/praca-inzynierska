@@ -1,5 +1,7 @@
 package com.example.backend.ontology.model;
 
+import com.example.backend.ontology.statement.Statement;
+import com.example.backend.ontology.statement.StatementService;
 import com.example.backend.ontology.wrapper.ModelOutputWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,9 @@ public class ModelService {
     @Autowired
     private ModelRepository modelRepository;
 
+    @Autowired
+    private StatementService statementService;
+
     public List<ModelOutputWrapper> getModels() {
         List<ModelOutputWrapper> result = new ArrayList<>();
         List<Model> all = modelRepository.findAll();
@@ -29,13 +34,13 @@ public class ModelService {
 
     public ModelOutputWrapper getModel(String name) {
         Optional<Model> model = modelRepository.findByName(name);
-
+        if (model.isEmpty())return null;
         return getModelOutputWrapper(model.get());
     }
 
 
 
-    private ModelOutputWrapper getModelOutputWrapper(Model model){
+    public ModelOutputWrapper getModelOutputWrapper(Model model){
         List<Long> statementIds = new ArrayList<>();
         model.getStatements().forEach(statement -> statementIds.add(statement.getId()));
         return new ModelOutputWrapper().builder().id(model.getId()).name(model.getName()).statements(statementIds).build();
@@ -56,24 +61,25 @@ public class ModelService {
     }
 
 
-    public ResponseEntity<Model> updateModel(String id, Model modelToUpdate) {
+    public Model updateModel(String id, Model modelToUpdate) {
 
         Optional<Model> current = modelRepository.findById(Long.parseLong(id));
-        return current
-                .map(value -> new ResponseEntity<>(modelRepository.save(getEntityToUpdate(value, modelToUpdate)),
-                        HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(modelToUpdate, HttpStatus.BAD_REQUEST));
+        if (current.isPresent())return current.get();
+
+        return null;
     }
 
 
-    public ResponseEntity<Model> deleteModel(String id) {
+    public Model deleteModel(String id) {
         Optional<Model> model = modelRepository.findById(Long.parseLong(id));
         if (model.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .build();
+            return null;
         }
+        List<Statement> statements = model.get().getStatements();
+        statementService.deleteStatements(statements);
+
         modelRepository.delete(model.get());
-        return new ResponseEntity<>(model.get(), HttpStatus.OK);
+        return model.get();
     }
 
     private Model getEntityToUpdate(Model current, Model modelToUpdate) {

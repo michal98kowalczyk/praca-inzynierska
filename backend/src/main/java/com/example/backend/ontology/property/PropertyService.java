@@ -93,4 +93,9 @@ public class PropertyService {
         return null;
     }
 
+    public List<Property> deleteProperties(List<Property> properties) {
+        List<Property> res = new ArrayList<>();
+        properties.forEach(p -> res.add(deleteProperty(p.getId().toString())));
+        return res;
+    }
 }

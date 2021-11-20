@@ -1,5 +1,5 @@
 import Model from './Model';
-import '../styles/ModelList.css';
+import '../../styles/model/ModelList.css';
 
 const ModelList = (props) => {
 

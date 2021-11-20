@@ -1,4 +1,4 @@
-import '../styles/ModelForm.css';
+import '../../styles/model/ModelForm.css';
 import { useState } from 'react';
 
 const ModelForm = ({ }) => {

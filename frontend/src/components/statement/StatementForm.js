@@ -1,4 +1,4 @@
-import '../styles/StatementForm.css';
+import '../../styles/statement/StatementForm.css';
 import { useState } from 'react';
 
 const StatementForm = () => {

@@ -29,7 +29,11 @@ public class BackendApplication {
                 registry.addMapping("/api/namespace/{name}").allowedOrigins("http://localhost:3000");
                 registry.addMapping("/api/namespace/{id}").allowedOrigins("http://localhost:3000");
                 registry.addMapping("/api/namespace/add").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/api/statement").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/api/statement/{id}").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/api/statement/add").allowedOrigins("http://localhost:3000");
                 registry.addMapping("/api/statements").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/api/statements/{id}").allowedOrigins("http://localhost:3000");
                 registry.addMapping("/api/statements/add").allowedOrigins("http://localhost:3000");
                 registry.addMapping("/api/model/{id}/statements").allowedOrigins("http://localhost:3000");
                 registry.addMapping("/api/verbs").allowedOrigins("http://localhost:3000");
