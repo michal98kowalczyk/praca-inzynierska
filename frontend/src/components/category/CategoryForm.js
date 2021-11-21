@@ -46,7 +46,7 @@ const CategoryForm = () => {
 
     return (
         <div>
-            <form onSubmit={handleOnSubmit}>
+            <form className="categoryForm" onSubmit={handleOnSubmit}>
                 <h2>Formularz dodania kategorii</h2>
                 <label htmlFor="">
                     <input type="text" value={newCategory} onChange={handleOnCategoryChange} placeholder="produkt/choroba..." />

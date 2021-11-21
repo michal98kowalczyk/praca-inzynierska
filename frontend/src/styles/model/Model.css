@@ -1,0 +1,40 @@
+li{
+    background-color: rgba(77, 76, 76, 0.356);
+    padding: 3px;
+    margin-top:2px ;
+}
+
+li a{
+    color: whitesmoke;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-right: 30px;
+    transition: .2s;
+}
+
+li a:hover{
+    text-decoration: underline;
+    letter-spacing: 2px;
+}
+
+li button{
+    display: inline-block;
+    outline: none;
+    border: none;
+    width: 40px;
+    background: transparent;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 2px;
+    cursor: pointer;
+}
+
+
+
+svg{
+    display: block;
+    color: rgb(230, 63, 63);
+    height: 100%;
+    width: 100%;
+}

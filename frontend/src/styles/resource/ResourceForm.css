@@ -1,0 +1,45 @@
+.resourceWrapper h2{
+    text-align: center;
+}
+.resourceForm{
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px;
+}
+
+.resourceForm label{
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.resourceForm input,
+.resourceForm select{
+    border: 2px solid black;
+    padding: 10px;
+    margin-right: 20px;
+    width: 30%;
+    background-color: rgba(255, 255, 255, 0.712);
+}
+
+.resourceForm input:focus{
+    border: 2px solid black;
+    padding: 10px;
+    margin-right: 20px;
+    background-color: rgba(255, 255, 255, 0.712);
+}
+.resourceForm button{
+    height: 40px;
+    cursor: pointer;
+    background-color: #000;
+    border: 2px solid black;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: whitesmoke;
+    transition: .2s;
+    padding: 10px;
+}
+
+.resourceForm button:hover{
+    border: 2px solid whitesmoke;
+}

@@ -1,5 +1,7 @@
 import '../../styles/model/Model.css';
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const Model = ({ id, name, statements }) => {
 
@@ -24,7 +26,7 @@ const Model = ({ id, name, statements }) => {
     }
 
     return (
-        <li>{name} <Link to={`/model/${id}/${name}`} >Odkryj</Link> <button onClick={handleOnClick}>Usun</button></li>
+        <li> <Link to={`/model/${id}/${name}`} >{name}</Link> <button onClick={handleOnClick}><FontAwesomeIcon icon={faTrash} /></button></li>
     );
 }
 

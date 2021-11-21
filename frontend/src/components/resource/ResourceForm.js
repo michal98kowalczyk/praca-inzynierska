@@ -56,9 +56,9 @@ const ResourceForm = () => {
     }
 
     return (
-        <div>
+        <div className="resourceWrapper">
             <h2>Formularz dodania czynnika</h2>
-            <form>
+            <form className="resourceForm">
                 <label onSubmit="">
                     <input type="text" value={resource} onChange={handleOnResourceChange} placeholder="mieso/cynk..." required />
                     <select value={category} onChange={handleOnCategoryChange} required>

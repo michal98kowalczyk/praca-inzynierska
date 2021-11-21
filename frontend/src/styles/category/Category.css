@@ -1,0 +1,12 @@
+ul{
+    text-align: center;
+    color: whitesmoke;
+}
+
+li{
+    background-color: rgba(77, 76, 76, 0.356);
+    padding: 3px;
+    margin-top:2px ;
+}
+
+

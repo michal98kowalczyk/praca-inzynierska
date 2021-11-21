@@ -1,0 +1,43 @@
+header{
+    color: #f5f3f3;
+    background-color: rgba(85, 85, 85, 0.616);
+    height: 10vh;
+    
+}
+
+header h1{
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+}
+
+header nav{
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: stretch;
+    
+}
+
+nav button,
+nav button a{
+    outline: inherit;
+    border: none;  
+    display: block;
+    background-color: rgba(85, 85, 85, 0.616);
+    flex-grow: 1;
+    flex-shrink: 1;
+    height: 5vh;
+    line-height: 5vh;
+    text-decoration: none;
+    cursor: pointer;
+    color: whitesmoke;
+    transition: .1s;
+}
+
+nav button:hover{
+    border: 2px solid whitesmoke;
+    font-weight: bold;
+}
+
