@@ -104,10 +104,10 @@ const StatementForm = () => {
             return;
         }
 
-        if (subjectCategory === "") {
-            alert("Wprowadz subject category");
-            return;
-        }
+        // if (subjectCategory === "") {
+        //     alert("Wprowadz subject category");
+        //     return;
+        // }
 
         if (predicate === "" || predicate === "-") {
             alert("Wprowadz predicate");
@@ -122,10 +122,10 @@ const StatementForm = () => {
             alert('wprowadz tylko jedno');
             return;
         }
-        if (resource !== "" && resourceCategory === "") {
-            alert('wprowadz resource category');
-            return;
-        }
+        // if (resource !== "" && resourceCategory === "") {
+        //     alert('wprowadz resource category');
+        //     return;
+        // }
         if (probability === undefined) {
             alert("Wprowadz probability");
             return;
@@ -181,70 +181,83 @@ const StatementForm = () => {
 
 
     return (
-        <form>
+        <form className="statementForm">
             <label htmlFor="m_name">Nazwa modelu
-                <select value={modelName} onChange={handleOnModelNameChange} required>
-                    <option>-</option>
-                    {currentModels != null ? currentModels.map(m => <option>{m.name}</option>) : undefined}
-                </select>
+
 
                 {/* <input id="m_name" type="text" placeholder="model" value={modelName} onChange={handleOnModelNameChange} /> */}
             </label>
-            <label htmlFor="subject">Subject
+            <select id="m_name" value={modelName} onChange={handleOnModelNameChange} required>
+                <option>-</option>
+                {currentModels != null ? currentModels.map(m => <option>{m.name}</option>) : undefined}
+            </select>
+
+            <label htmlFor="subject">Czynnik
                 {/* <input id="subject" type="text" placeholder="subject" value={subject} onChange={handleOnSubjectChange} /> */}
-                <select value={subject} onChange={handleOnSubjectChange} required>
-                    <option>-</option>
-                    {currentResources != null ? currentResources.map(r => <option>{r.name}</option>) : undefined}
-                </select>
+
             </label>
-            <label htmlFor="subjectCategory">subjectCategory
+            <select id="subject" value={subject} onChange={handleOnSubjectChange} required>
+                <option>-</option>
+                {currentResources != null ? currentResources.map(r => <option>{r.name}</option>) : undefined}
+            </select>
+            <label htmlFor="subjectCategory">kategoria
 
                 {/* <input id="subjectCategory" type="text" placeholder="subjectCategory" value={subjectCategory} onChange={handleOnSubjectCategoryChange} /> */}
-                <input id="subjectCategory" type="text" placeholder="subjectCategory" value={subjectCategory} onChange={handleOnSubjectCategoryChange} disabled />
             </label>
-            <label htmlFor="predicate">Predicate
-                <select value={predicate} onChange={handleOnPredicateChange} required>
-                    <option>-</option>
-                    {currentVerbs != null ? currentVerbs.map(v => <option>{v.verb}</option>) : undefined}
-                </select>
+            <input id="subjectCategory" type="text" placeholder="subjectCategory" value={subjectCategory} onChange={handleOnSubjectCategoryChange} disabled />
+
+            <label htmlFor="predicate">zależność
+
                 {/* <input id="predicate" type="text" placeholder="predicate" value={predicate} onChange={handleOnPredicateChange} /> */}
             </label>
-            <label htmlFor="resource">Resource
+            <select id="predicate" value={predicate} onChange={handleOnPredicateChange} required>
+                <option>-</option>
+                {currentVerbs != null ? currentVerbs.map(v => <option>{v.verb}</option>) : undefined}
+            </select>
+            <label htmlFor="resource">obiekt
                 {/* <input id="resource" type="text" placeholder="resource" value={resource} onChange={handleOnResourceChange} /> */}
-                <select value={resource} onChange={handleOnResourceChange} required>
-                    <option>-</option>
-                    {currentResources != null ? currentResources.map(r => <option>{r.name}</option>) : undefined}
-                </select>
+
             </label>
-            <label htmlFor="resourceCategory">resourceCategory
+            <select id="resource" value={resource} onChange={handleOnResourceChange} required>
+                <option>-</option>
+                {currentResources != null ? currentResources.map(r => <option>{r.name}</option>) : undefined}
+            </select>
+            <label htmlFor="resourceCategory">kategoria
                 {/* <input id="resourceCategory" type="text" placeholder="resourceCategory" value={resourceCategory} onChange={handleOnResourceCategoryChange} /> */}
-                <input id="resourceCategory" type="text" placeholder="resourceCategory" value={resourceCategory} onChange={handleOnResourceCategoryChange} disabled />
             </label>
-            <label htmlFor="literal">Literal
-                <input id="literal" type="text" placeholder="literal" value={literal} onChange={handleOnLiteralChange} />
+            <input id="resourceCategory" type="text" placeholder="resourceCategory" value={resourceCategory} onChange={handleOnResourceCategoryChange} disabled />
+
+            <label htmlFor="literal">literał
             </label>
-            <label htmlFor="probability">Probability
-                <input id="probability" type="number" step="0.01" min="-1" max="1" placeholder="probability" value={probability} onChange={handleOnProbabilityChange} />
+            <input id="literal" type="text" placeholder="literal" value={literal} onChange={handleOnLiteralChange} />
+
+            <label htmlFor="probability">wiarygodność
             </label>
+            <input id="probability" type="number" step="0.01" min="-1" max="1" placeholder="probability" value={probability} onChange={handleOnProbabilityChange} />
+
 
             {properties.map((element, index) => (
                 <div className="form-inline" key={index}>
-                    <label>Key</label>
-                    <select name="key" value={element.key || ""} onChange={e => handleChange(index, e)} required>
-                        <option>-</option>
-                        <option>Autor</option>
-                        <option>Źródło</option>
-                        <option>Data</option>
-                        <option>Wydawca</option>
-                    </select>
+                    <div className="keyWrapper">
+                        <label>Klucz</label>
+                        <select name="key" value={element.key || ""} onChange={e => handleChange(index, e)} required>
+                            <option>-</option>
+                            <option>Autor</option>
+                            <option>Źródło</option>
+                            <option>Data</option>
+                            <option>Wydawca</option>
+                        </select>
+                    </div>
                     {/* <input type="text" name="key" value={element.key || ""} onChange={e => handleChange(index, e)} /> */}
-                    <label>Value</label>
-                    <input type="text" name="value" value={element.value || ""} onChange={e => handleChange(index, e)} />
-                    {
-                        index ?
-                            <button type="button" className="button remove" onClick={() => removeFormFields(index)}>Remove</button>
-                            : null
-                    }
+                    <div className="valueWrapper">
+                        <label>Wartość</label>
+                        <input type="text" name="value" value={element.value || ""} onChange={e => handleChange(index, e)} />
+                        {
+                            index ?
+                                <button type="button" className="button remove" onClick={() => removeFormFields(index)}>Remove</button>
+                                : null
+                        }
+                    </div>
                 </div>
             ))}
             <button className="button add" type="button" onClick={() => addFormFields()}>Dodaj parametr</button>

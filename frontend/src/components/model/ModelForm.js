@@ -2,7 +2,7 @@ import '../../styles/model/ModelForm.css';
 import { useState } from 'react';
 
 const ModelForm = ({ }) => {
-    const [modelName, setModelName] = useState();
+    const [modelName, setModelName] = useState("");
 
     const handleOnChange = (e) => {
         setModelName(e.target.value);
@@ -24,10 +24,13 @@ const ModelForm = ({ }) => {
             body: JSON.stringify(model)
         };
         fetch('http://localhost:8080/api/model/add', requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                setModelName("");
-                window.location.reload(false);
+            .then(response => {
+                if (response.status === 200) {
+                    setModelName("");
+                    window.location.reload(false);
+                    return response.json();
+                }
+                else if (response.status === 422) alert("Model juz istnieje");
             })
             .catch(err => console.log(err));
 
@@ -36,8 +39,9 @@ const ModelForm = ({ }) => {
     }
 
     return (
-        <form>
-            <label htmlFor="m_name">Nazwa modelu </label>
+        <form className="model">
+            <h2>Formularz dodania modelu </h2>
+            <label htmlFor="m_name"></label>
             <input id="m_name" type="text" placeholder="Wprowadź nazwe" value={modelName} onChange={handleOnChange} />
 
             <button onClick={handleOnClick}>Dodaj</button>

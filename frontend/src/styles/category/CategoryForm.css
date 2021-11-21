@@ -1,0 +1,45 @@
+section{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.categoryForm{
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px;
+}
+
+.categoryForm label{
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.categoryForm input{
+    border: 2px solid black;
+    padding: 10px;
+    margin-right: 20px;
+    background-color: rgba(255, 255, 255, 0.712);
+}
+
+.categoryForm input:focus{
+    border: 2px solid black;
+    padding: 10px;
+    margin-right: 20px;
+    background-color: rgba(255, 255, 255, 0.712);
+}
+.categoryForm button{
+    height: 40px;
+    cursor: pointer;
+    background-color: #000;
+    border: 2px solid black;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: whitesmoke;
+    transition: .2s;
+    padding: 10px;
+}
+
+.categoryForm button:hover{
+    border: 2px solid whitesmoke;
+}

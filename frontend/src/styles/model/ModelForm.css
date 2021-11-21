@@ -1,3 +1,40 @@
-label{
-    display: block;
+form.model{
+    margin-top: 20px;
+    text-align: center;
+}
+
+form.model label{
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+form.model input{
+    border: 2px solid black;
+    padding: 10px;
+    margin-right: 20px;
+    background-color: rgba(255, 255, 255, 0.712);
+}
+
+form.model input:focus{
+    border: 2px solid black;
+    padding: 10px;
+    margin-right: 20px;
+    background-color: rgba(255, 255, 255, 0.712);
+}
+
+form.model button{
+    height: 40px;
+    cursor: pointer;
+    background-color: #000;
+    border: 2px solid black;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: whitesmoke;
+    transition: .2s;
+    padding: 10px;
+}
+
+form.model button:hover{
+    border: 2px solid whitesmoke;
 }

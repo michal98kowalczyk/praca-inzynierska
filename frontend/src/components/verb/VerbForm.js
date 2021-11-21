@@ -55,9 +55,9 @@ const VerbForm = () => {
     }
 
     return (
-        <div>
+        <div className="verbWrapper">
             <h2>Formularz dodania relacji</h2>
-            <form>
+            <form className="verbForm">
                 <label onSubmit={handleOnSubmit}>
                     <input type="text" value={newVerb} onChange={handleOnVerbChange} placeholder="szkodzi..." required />
 

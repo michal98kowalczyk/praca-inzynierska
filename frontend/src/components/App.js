@@ -10,26 +10,33 @@ import '../styles/App.css';
 import CategoryForm from './category/CategoryForm'
 import ResourceForm from './resource/ResourceForm'
 import VerbForm from './verb/VerbForm'
+import Footer from './Footer'
 
 const App = () => {
 
   return (
     <div className="App">
       <Header />
+      <div className="wrapper">
 
-      <Routes>
 
-        <Route path='/' element={<Main />} />
+        <Routes>
 
-        <Route path="/model/:id/:name" element={<ModelDetails />} />
-        <Route path="/model/form" element={<ModelForm />} />
-        <Route path="/statement/form" element={<StatementForm />} />
-        <Route path="/category/form" element={<CategoryForm />} />
-        <Route path="/resource/form" element={<ResourceForm />} />
-        <Route path="/verb/form" element={<VerbForm />} />
-        <Route path='*' element={<PageNotFound />} />
+          <Route path='/' element={<Main />} />
 
-      </Routes>
+          <Route path="/model/:id/:name" element={<ModelDetails />} />
+          <Route path="/model/form" element={<ModelForm />} />
+          <Route path="/statement/form" element={<StatementForm />} />
+          <Route path="/category/form" element={<CategoryForm />} />
+          <Route path="/resource/form" element={<ResourceForm />} />
+          <Route path="/verb/form" element={<VerbForm />} />
+          <Route path='*' element={<PageNotFound />} />
+
+        </Routes>
+
+
+      </div>
+      <Footer />
     </div>
   );
 }
