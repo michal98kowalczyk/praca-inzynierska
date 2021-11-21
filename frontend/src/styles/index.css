@@ -5,10 +5,3 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-body{
-  min-height: 100vh;
-  background-image: url('../images/ehr-1476525_1280.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
