@@ -25,7 +25,10 @@ const ModelForm = ({ }) => {
         };
         fetch('http://localhost:8080/api/model/add', requestOptions)
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => {
+                setModelName("");
+                window.location.reload(false);
+            })
             .catch(err => console.log(err));
 
 

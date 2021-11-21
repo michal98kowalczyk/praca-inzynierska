@@ -6,14 +6,19 @@ import ModelList from './model/ModelList';
 const Main = () => {
 
     const [models, setModels] = useState(null);
+    const [errorMsg, seterrorMsg] = useState("");
 
     useEffect(() => {
         fetch('http://localhost:8080/api/models')
-            .then(response => response.json())
+            .then(response => {
+                return response.json();
+
+            })
             .then(data => {
+
                 setModels(data);
             })
-            .catch(err => console.log(err));
+            .catch(err => seterrorMsg("Brak modeli w bazie"));
     }, [])
 
 

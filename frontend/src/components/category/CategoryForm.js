@@ -6,8 +6,6 @@ const CategoryForm = () => {
     const [categories, setCategories] = useState(null);
     const [newCategory, setNewCategory] = useState("");
 
-
-
     useEffect(() => {
         fetch('http://localhost:8080/api/namespace')
             .then(response => response.json())

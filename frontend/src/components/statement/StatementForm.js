@@ -1,17 +1,46 @@
 import '../../styles/statement/StatementForm.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const StatementForm = () => {
+    const [currentModels, setCurrentModels] = useState(null);
+    const [currentResources, setCurrentResources] = useState(null);
+    const [currentVerbs, setCurrentVerbs] = useState(null);
+
+    useEffect(() => {
+        fetch('http://localhost:8080/api/models')
+            .then(response => response.json())
+            .then(data => {
+                setCurrentModels(data);
+            })
+            .catch(err => console.log(err));
+
+        fetch('http://localhost:8080/api/resources')
+            .then(response => response.json())
+            .then(data => {
+                setCurrentResources(data);
+            })
+            .catch(err => console.log(err));
+
+        fetch('http://localhost:8080/api/verbs')
+            .then(response => response.json())
+            .then(data => {
+                setCurrentVerbs(data);
+            })
+            .catch(err => console.log(err));
+
+
+    }, []);
 
     const [modelName, setModelName] = useState("");
-    const [subject, setSubject] = useState("");
+    const [subject, setSubject] = useState("-");
     const [subjectCategory, setSubjectCategory] = useState("");
-    const [predicate, setPredicate] = useState("");
-    const [resource, setResource] = useState("");
+    const [predicate, setPredicate] = useState("-");
+    const [resource, setResource] = useState("-");
     const [resourceCategory, setResourceCategory] = useState("");
     const [literal, setLiteral] = useState("");
     const [probability, setProbability] = useState();
     const [properties, setProperties] = useState([{ key: "", value: "" }])
+
     let handleChange = (i, e) => {
         let newFormValues = [...properties];
         newFormValues[i][e.target.name] = e.target.value;
@@ -33,12 +62,22 @@ const StatementForm = () => {
     }
     const handleOnSubjectChange = (e) => {
         setSubject(e.target.value);
+
+        let r = currentResources.find(r => r.name == e.target.value);
+        if (r.namespace != null) {
+            setSubjectCategory(r.namespace.name);
+        }
     }
     const handleOnPredicateChange = (e) => {
         setPredicate(e.target.value);
     }
     const handleOnResourceChange = (e) => {
         setResource(e.target.value);
+
+        let r = currentResources.find(r => r.name == e.target.value);
+        if (r.namespace != null) {
+            setResourceCategory(r.namespace.name);
+        }
     }
     const handleOnLiteralChange = (e) => {
         setLiteral(e.target.value);
@@ -56,11 +95,11 @@ const StatementForm = () => {
     const handleOnClick = (e) => {
         e.preventDefault();
 
-        if (modelName === "") {
+        if (modelName === "" || modelName === "-") {
             alert("Wprowadz nazwe modelu");
             return;
         }
-        if (subject === "") {
+        if (subject === "" || subject === "-") {
             alert("Wprowadz subject");
             return;
         }
@@ -70,16 +109,16 @@ const StatementForm = () => {
             return;
         }
 
-        if (predicate === "") {
+        if (predicate === "" || predicate === "-") {
             alert("Wprowadz predicate");
             return;
         }
 
-        if (resource === "" && literal === "") {
+        if ((resource === "" || resource === "-") && literal === "") {
             alert('wprowadz literal lub resorce');
             return;
         }
-        if (resource !== "" && literal !== "") {
+        if ((resource !== "" && resource !== "-") && literal !== "") {
             alert('wprowadz tylko jedno');
             return;
         }
@@ -89,6 +128,10 @@ const StatementForm = () => {
         }
         if (probability === undefined) {
             alert("Wprowadz probability");
+            return;
+        }
+        if (probability < -1 || probability > 1) {
+            alert("Błędne probability");
             return;
         }
 
@@ -122,9 +165,12 @@ const StatementForm = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(statement)
         };
-        fetch('http://localhost:8080/api/statements/add', requestOptions)
+        fetch('http://localhost:8080/api/statement/add', requestOptions)
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => {
+                console.log(data);
+                window.location.reload(false);
+            })
             .catch(err => console.log(err));
 
 
@@ -137,23 +183,42 @@ const StatementForm = () => {
     return (
         <form>
             <label htmlFor="m_name">Nazwa modelu
+                <select value={modelName} onChange={handleOnModelNameChange} required>
+                    <option>-</option>
+                    {currentModels != null ? currentModels.map(m => <option>{m.name}</option>) : undefined}
+                </select>
 
-                <input id="m_name" type="text" placeholder="model" value={modelName} onChange={handleOnModelNameChange} />
+                {/* <input id="m_name" type="text" placeholder="model" value={modelName} onChange={handleOnModelNameChange} /> */}
             </label>
             <label htmlFor="subject">Subject
-                <input id="subject" type="text" placeholder="subject" value={subject} onChange={handleOnSubjectChange} />
+                {/* <input id="subject" type="text" placeholder="subject" value={subject} onChange={handleOnSubjectChange} /> */}
+                <select value={subject} onChange={handleOnSubjectChange} required>
+                    <option>-</option>
+                    {currentResources != null ? currentResources.map(r => <option>{r.name}</option>) : undefined}
+                </select>
             </label>
             <label htmlFor="subjectCategory">subjectCategory
-                <input id="subjectCategory" type="text" placeholder="subjectCategory" value={subjectCategory} onChange={handleOnSubjectCategoryChange} />
+
+                {/* <input id="subjectCategory" type="text" placeholder="subjectCategory" value={subjectCategory} onChange={handleOnSubjectCategoryChange} /> */}
+                <input id="subjectCategory" type="text" placeholder="subjectCategory" value={subjectCategory} onChange={handleOnSubjectCategoryChange} disabled />
             </label>
             <label htmlFor="predicate">Predicate
-                <input id="predicate" type="text" placeholder="predicate" value={predicate} onChange={handleOnPredicateChange} />
+                <select value={predicate} onChange={handleOnPredicateChange} required>
+                    <option>-</option>
+                    {currentVerbs != null ? currentVerbs.map(v => <option>{v.verb}</option>) : undefined}
+                </select>
+                {/* <input id="predicate" type="text" placeholder="predicate" value={predicate} onChange={handleOnPredicateChange} /> */}
             </label>
             <label htmlFor="resource">Resource
-                <input id="resource" type="text" placeholder="resource" value={resource} onChange={handleOnResourceChange} />
+                {/* <input id="resource" type="text" placeholder="resource" value={resource} onChange={handleOnResourceChange} /> */}
+                <select value={resource} onChange={handleOnResourceChange} required>
+                    <option>-</option>
+                    {currentResources != null ? currentResources.map(r => <option>{r.name}</option>) : undefined}
+                </select>
             </label>
             <label htmlFor="resourceCategory">resourceCategory
-                <input id="resourceCategory" type="text" placeholder="resourceCategory" value={resourceCategory} onChange={handleOnResourceCategoryChange} />
+                {/* <input id="resourceCategory" type="text" placeholder="resourceCategory" value={resourceCategory} onChange={handleOnResourceCategoryChange} /> */}
+                <input id="resourceCategory" type="text" placeholder="resourceCategory" value={resourceCategory} onChange={handleOnResourceCategoryChange} disabled />
             </label>
             <label htmlFor="literal">Literal
                 <input id="literal" type="text" placeholder="literal" value={literal} onChange={handleOnLiteralChange} />
@@ -165,7 +230,14 @@ const StatementForm = () => {
             {properties.map((element, index) => (
                 <div className="form-inline" key={index}>
                     <label>Key</label>
-                    <input type="text" name="key" value={element.key || ""} onChange={e => handleChange(index, e)} />
+                    <select name="key" value={element.key || ""} onChange={e => handleChange(index, e)} required>
+                        <option>-</option>
+                        <option>Autor</option>
+                        <option>Źródło</option>
+                        <option>Data</option>
+                        <option>Wydawca</option>
+                    </select>
+                    {/* <input type="text" name="key" value={element.key || ""} onChange={e => handleChange(index, e)} /> */}
                     <label>Value</label>
                     <input type="text" name="value" value={element.value || ""} onChange={e => handleChange(index, e)} />
                     {

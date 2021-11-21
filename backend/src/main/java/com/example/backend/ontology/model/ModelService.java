@@ -42,7 +42,9 @@ public class ModelService {
 
     public ModelOutputWrapper getModelOutputWrapper(Model model){
         List<Long> statementIds = new ArrayList<>();
-        model.getStatements().forEach(statement -> statementIds.add(statement.getId()));
+        List<Statement> statements = model.getStatements();
+        if(statements != null && !statements.isEmpty())
+            statements.forEach(statement -> statementIds.add(statement.getId()));
         return new ModelOutputWrapper().builder().id(model.getId()).name(model.getName()).statements(statementIds).build();
 
     }
