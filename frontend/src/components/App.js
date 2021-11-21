@@ -8,7 +8,8 @@ import { Routes, Route } from "react-router-dom";
 
 import '../styles/App.css';
 import CategoryForm from './category/CategoryForm'
-
+import ResourceForm from './resource/ResourceForm'
+import VerbForm from './verb/VerbForm'
 
 const App = () => {
 
@@ -24,6 +25,8 @@ const App = () => {
         <Route path="/model/form" element={<ModelForm />} />
         <Route path="/statement/form" element={<StatementForm />} />
         <Route path="/category/form" element={<CategoryForm />} />
+        <Route path="/resource/form" element={<ResourceForm />} />
+        <Route path="/verb/form" element={<VerbForm />} />
         <Route path='*' element={<PageNotFound />} />
 
       </Routes>

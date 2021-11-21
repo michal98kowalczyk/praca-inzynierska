@@ -9,6 +9,8 @@ const Header = () => {
                 <Link to="/model/form" >Dodaj model</ Link >
                 <Link to="/statement/form" >Dodaj statement</ Link >
                 <Link to="/category/form" >Dodaj kategorie</ Link >
+                <Link to="/resource/form" >Dodaj czynnik</ Link >
+                <Link to="/verb/form" >Dodaj relacje</ Link >
             </nav>
 
         </header>
