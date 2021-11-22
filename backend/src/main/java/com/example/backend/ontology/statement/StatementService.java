@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -128,10 +129,80 @@ public class StatementService {
 
         Statement createdStatement = statementRepository.save(statement);
         List<Property> properties = statement.getProperties();
-        properties.forEach(property -> property.setStatement(createdStatement));
-        propertyService.addProperties(properties);
+        if(properties!=null){
+            properties.forEach(property -> property.setStatement(createdStatement));
+            propertyService.addProperties(properties);
+        }
+
+
+        runPrediction(createdStatement);
 
         return createdStatement;
+    }
+
+    private void runPrediction(Statement createdStatement) {
+        List<Statement> toUpdate = new ArrayList<>();
+
+//        case1 resource in created statement is a subject in another statement
+        if (createdStatement.isRes){
+            Resource resource = createdStatement.getResource();
+            List<Statement> byResourceAsSubject = statementRepository.findAllBySubjectId(resource.getId());
+
+            for (Statement s : byResourceAsSubject) {
+                Statement statement = new Statement();
+                statement.setModel(createdStatement.getModel());
+                // add to another model if resource was a model e.g kurczak szkodzi na cukrzyce ..
+                Resource rFromS = s.getResource();
+                Model existModelByName = modelService.getExistModelByName(rFromS.getName());
+                if (existModelByName != null && !existModelByName.getName().equals(createdStatement.getModel().getName()))
+                    statement.setModel(existModelByName);
+
+
+                statement.setSubject(createdStatement.getSubject());
+                statement.setPredicate(s.getPredicate());
+                statement.setResource(s.getResource());
+                Double d = s.getProbability() * createdStatement.getProbability();
+                int temp = (int)(d*100.0);
+                double shortDouble = ((double)temp)/100.0;
+                statement.setProbability(shortDouble);
+
+                toUpdate.add(statement);
+
+            }
+        }
+
+        //        case2 subject in created statement is a resource in another statement
+        Resource subject = createdStatement.getSubject();
+        List<Statement> bySubjectAsResource = statementRepository.findAllByResourceId(subject.getId());
+
+        for (Statement s : bySubjectAsResource) {
+            Statement statement = new Statement();
+            statement.setModel(createdStatement.getModel());
+
+            // add to another model if resource was a model e.g cukrzyca szkodzi na reumatoidalne .. powinno byc dodane do modelu tego drugiego
+            Resource rFromS = createdStatement.getResource();
+            Model existModelByName = modelService.getExistModelByName(rFromS.getName());
+
+            if (existModelByName != null && !existModelByName.getName().equals( createdStatement.getModel().getName())){
+                statement.setModel(existModelByName);
+            }
+
+
+            statement.setSubject(s.getSubject());
+            statement.setPredicate(createdStatement.getPredicate());
+            statement.setResource(createdStatement.getResource());
+            Double d = s.getProbability() * createdStatement.getProbability();
+            int temp = (int) (d * 100.0);
+            double shortDouble = ((double) temp) / 100.0;
+            statement.setProbability(shortDouble);
+
+            toUpdate.add(statement);
+
+        }
+
+        if (!toUpdate.isEmpty()) {
+            addStatements(toUpdate);
+        }
     }
 
     public List<Statement> addStatements(List<Statement> statements) {
