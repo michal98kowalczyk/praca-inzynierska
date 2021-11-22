@@ -63,7 +63,7 @@ const StatementForm = () => {
     const handleOnSubjectChange = (e) => {
         setSubject(e.target.value);
 
-        let r = currentResources.find(r => r.name == e.target.value);
+        let r = currentResources.find(r => r.name === e.target.value);
         if (r.namespace != null) {
             setSubjectCategory(r.namespace.name);
         }
@@ -74,7 +74,7 @@ const StatementForm = () => {
     const handleOnResourceChange = (e) => {
         setResource(e.target.value);
 
-        let r = currentResources.find(r => r.name == e.target.value);
+        let r = currentResources.find(r => r.name === e.target.value);
         if (r.namespace != null) {
             setResourceCategory(r.namespace.name);
         }
@@ -151,7 +151,7 @@ const StatementForm = () => {
                 dataType: "string"
             }
         }
-        if (resource !== "") {
+        if (resource !== "" && resource !== "-") {
             statement.resource = {
                 name: resource,
                 nameSpace: { name: resourceCategory }
@@ -251,13 +251,14 @@ const StatementForm = () => {
                     {/* <input type="text" name="key" value={element.key || ""} onChange={e => handleChange(index, e)} /> */}
                     <div className="valueWrapper">
                         <label>Wartość</label>
-                        <input type="text" name="value" value={element.value || ""} onChange={e => handleChange(index, e)} />
-                        {
-                            index ?
-                                <button type="button" className="button remove" onClick={() => removeFormFields(index)}>Remove</button>
-                                : null
-                        }
+                        {element.key === "Data" ? <input type="date" name="value" value={element.value || ""} onChange={e => handleChange(index, e)} /> : <input type="text" name="value" value={element.value || ""} onChange={e => handleChange(index, e)} />}
                     </div>
+                    {
+                        index ?
+                            <button type="button" className="button remove" onClick={() => removeFormFields(index)}>Remove</button>
+                            : null
+                    }
+
                 </div>
             ))}
             <button className="button add" type="button" onClick={() => addFormFields()}>Dodaj parametr</button>

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
 import StatementList from '../statement/StatementList';
 
-const ModelDetails = (props) => {
+const ModelDetails = () => {
     const { id, name } = useParams();
     const [statements, setStatements] = useState(null);
 

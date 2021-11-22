@@ -1,7 +1,7 @@
-.verbItem button{
+.resourceItem button{
     margin-left: 20px;
     width: 60px;
 }
-.verbItem button:hover{
+.resourceItem button:hover{
     background-color: rgb(175, 175, 175);
 }

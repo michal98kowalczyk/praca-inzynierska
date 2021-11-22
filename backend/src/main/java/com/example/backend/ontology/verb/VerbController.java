@@ -44,7 +44,7 @@ public class VerbController {
     public ResponseEntity<VerbWrapper> deleteVerb(@PathVariable("id") String id) {
         Verb v = verbService.deleteVerb(id);
         if (v == null){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.unprocessableEntity().build();
         }
         return ResponseEntity.ok(verbService.convert(v));
     }

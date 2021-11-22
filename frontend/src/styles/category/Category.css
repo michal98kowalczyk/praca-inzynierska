@@ -10,3 +10,10 @@ li{
 }
 
 
+.categoryItem button{
+    margin-left: 20px;
+    width: 60px;
+}
+.categoryItem button:hover{
+    background-color: rgb(175, 175, 175);
+}

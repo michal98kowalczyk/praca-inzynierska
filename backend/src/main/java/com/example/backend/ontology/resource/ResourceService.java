@@ -3,6 +3,8 @@ package com.example.backend.ontology.resource;
 import com.example.backend.ontology.literal.Literal;
 import com.example.backend.ontology.namespace.NameSpace;
 import com.example.backend.ontology.namespace.NameSpaceService;
+import com.example.backend.ontology.statement.Statement;
+import com.example.backend.ontology.statement.StatementService;
 import com.example.backend.ontology.wrapper.LiteralWrapper;
 import com.example.backend.ontology.wrapper.ResourceWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,15 @@ public class ResourceService {
     @Autowired
     private NameSpaceService nameSpaceService;
 
+    @Autowired
+    private StatementService statementService;
+
     public List<Resource> getResources(){
         return resourceRepository.findAll();
+    }
+
+    public List<Resource> getResourcesByNameSpaceId(Long id){
+        return resourceRepository.findAllByNameSpaceId(id);
     }
 
     public Resource getResource(String name) {
@@ -32,6 +41,8 @@ public class ResourceService {
 
         return resource.get();
     }
+
+
 
     public Resource addResource(Resource resource) {
         Optional<Resource> resourceFromDb = resourceRepository.findByName(resource.getName());
@@ -65,6 +76,11 @@ public class ResourceService {
         if (res.isEmpty()) {
             return null;
         }
+
+        List<Statement> statementsBySubjectId = statementService.getStatementsBySubjectId(Long.parseLong(id));
+        List<Statement> statementsByResourceId = statementService.getStatementsByResourceId(Long.parseLong(id));
+        if (!statementsByResourceId.isEmpty() || !statementsBySubjectId.isEmpty())return null;
+
         resourceRepository.delete(res.get());
         return res.get();
     }

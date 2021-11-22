@@ -47,7 +47,7 @@ public class ResourceController {
     public ResponseEntity<ResourceWrapper> deleteResource(@PathVariable("id") String id) {
         Resource res = resourceService.deleteResource(id);
         if (res == null){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.unprocessableEntity().build();
         }
         return ResponseEntity.ok(resourceService.convert(res));
     }

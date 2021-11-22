@@ -14,7 +14,7 @@ const Model = ({ id, name, statements }) => {
         };
         fetch(`http://localhost:8080/api/model/${id}`, requestOptions)
             .then(response => {
-                if (response.status == 200) return response.json();
+                if (response.status === 200) return response.json();
 
             })
             .then(data => {

@@ -2,6 +2,8 @@ package com.example.backend.ontology.verb;
 
 import com.example.backend.ontology.resource.Resource;
 import com.example.backend.ontology.resource.ResourceRepository;
+import com.example.backend.ontology.statement.Statement;
+import com.example.backend.ontology.statement.StatementService;
 import com.example.backend.ontology.wrapper.VerbWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ import java.util.Optional;
 public class VerbService {
     @Autowired
     private VerbRepository verbRepository;
+
+    @Autowired
+    private StatementService statementService;
 
     public List<Verb> getVerbs(){
         return verbRepository.findAll();
@@ -50,6 +55,9 @@ public class VerbService {
         if (v.isEmpty()) {
             return null;
         }
+        List<Statement> statementsByVerbId = statementService.getStatementsByPredicateId(Long.parseLong(id));
+        if (!statementsByVerbId.isEmpty()) return null;
+
         verbRepository.delete(v.get());
         return v.get();
     }

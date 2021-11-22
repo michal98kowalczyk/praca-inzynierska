@@ -49,6 +49,18 @@ public class StatementService {
         return  statementRepository.findAllByModelId(id);
     }
 
+    public List<Statement> getStatementsByPredicateId(Long id) {
+        return  statementRepository.findAllByPredicateId(id);
+    }
+
+    public List<Statement> getStatementsBySubjectId(Long id) {
+        return  statementRepository.findAllBySubjectId(id);
+    }
+
+    public List<Statement> getStatementsByResourceId(Long id) {
+        return  statementRepository.findAllByResourceId(id);
+    }
+
     public Statement getStatementById(String id) {
 
         Optional<Statement> byId = statementRepository.findById(Long.parseLong(id));
