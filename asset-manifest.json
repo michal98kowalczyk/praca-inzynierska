@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/praca-inzynierska/static/css/main.4df58b83.chunk.css",
+    "main.js": "/praca-inzynierska/static/js/main.9dd10f78.chunk.js",
+    "main.js.map": "/praca-inzynierska/static/js/main.9dd10f78.chunk.js.map",
+    "runtime-main.js": "/praca-inzynierska/static/js/runtime-main.b9c9e08c.js",
+    "runtime-main.js.map": "/praca-inzynierska/static/js/runtime-main.b9c9e08c.js.map",
+    "static/js/2.4bd028a9.chunk.js": "/praca-inzynierska/static/js/2.4bd028a9.chunk.js",
+    "static/js/2.4bd028a9.chunk.js.map": "/praca-inzynierska/static/js/2.4bd028a9.chunk.js.map",
+    "static/js/3.2731e849.chunk.js": "/praca-inzynierska/static/js/3.2731e849.chunk.js",
+    "static/js/3.2731e849.chunk.js.map": "/praca-inzynierska/static/js/3.2731e849.chunk.js.map",
+    "index.html": "/praca-inzynierska/index.html",
+    "static/css/main.4df58b83.chunk.css.map": "/praca-inzynierska/static/css/main.4df58b83.chunk.css.map",
+    "static/js/2.4bd028a9.chunk.js.LICENSE.txt": "/praca-inzynierska/static/js/2.4bd028a9.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/praca-inzynierska/static/media/ehr-1476525_1280.97b25af3.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b9c9e08c.js",
+    "static/js/2.4bd028a9.chunk.js",
+    "static/css/main.4df58b83.chunk.css",
+    "static/js/main.9dd10f78.chunk.js"
+  ]
+}
