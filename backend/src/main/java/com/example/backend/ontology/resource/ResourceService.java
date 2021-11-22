@@ -49,7 +49,6 @@ public class ResourceService {
         if (resourceFromDb.isPresent()) {
             return null;
         }
-        System.out.println(resource);
         NameSpace nameSpace = resource.getNameSpace();
         NameSpace nameSpaceFromDb = nameSpaceService.addNameSpace(nameSpace);
         if(nameSpaceFromDb ==null){

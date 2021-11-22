@@ -38,7 +38,6 @@ public class NameSpaceController {
 
     @PostMapping("namespace/add")
     public ResponseEntity<NameSpaceWrapper> addNamespace(@RequestBody NameSpace nameSpace){
-        System.out.println(nameSpace);
         NameSpace ns = nameSpaceService.addNameSpace(nameSpace);
         if (ns == null){
             return ResponseEntity.unprocessableEntity().build();

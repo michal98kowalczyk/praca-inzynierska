@@ -59,7 +59,11 @@ public class ModelService {
     }
 
     public Model getExistModelByName(String name){
-        return modelRepository.findByName(name).get();
+
+        Optional<Model> byName = modelRepository.findByName(name);
+        if (byName.isEmpty())return null;
+
+        return byName.get();
     }
 
 
