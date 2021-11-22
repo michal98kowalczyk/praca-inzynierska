@@ -1,7 +1,7 @@
 import '../../styles/model/ModelForm.css';
 import { useState } from 'react';
 
-const ModelForm = ({ }) => {
+const ModelForm = () => {
     const [modelName, setModelName] = useState("");
 
     const handleOnChange = (e) => {

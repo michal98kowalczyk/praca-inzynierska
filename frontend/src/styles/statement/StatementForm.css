@@ -17,10 +17,15 @@
 }
 
 .statementForm .form-inline{
+    width: 60%;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 33% 33% 33%;
     grid-gap: 10px;
 }
+.statementForm .form-inline button{
+    width: 90px;
+}
+
 
 .statementForm input,
 .statementForm,select{

@@ -1,9 +1,11 @@
 import '../../styles/resource/ResourceForm.css';
 import { useState, useEffect } from 'react';
+import ResourceList from './ResourceList';
 
 const ResourceForm = () => {
 
     const [categories, setCategories] = useState(null);
+    const [resources, setResources] = useState(null);
     const [resource, setResource] = useState("");
     const [category, setCategory] = useState("-");
 
@@ -13,6 +15,13 @@ const ResourceForm = () => {
             .then(response => response.json())
             .then(data => {
                 setCategories(data);
+            })
+            .catch(err => console.log(err));
+
+        fetch('http://localhost:8080/api/resources')
+            .then(response => response.json())
+            .then(data => {
+                setResources(data);
             })
             .catch(err => console.log(err));
 
@@ -47,7 +56,7 @@ const ResourceForm = () => {
             .then(data => {
                 setCategory("");
                 setResource("")
-                //window.location.reload(false);
+                window.location.reload(false);
             })
             .catch(err => console.log(err));
 
@@ -69,6 +78,13 @@ const ResourceForm = () => {
                 </label>
 
             </form>
+
+            <section className="availableResources">
+
+                <h2>Dostepne czynniki</h2>
+
+                {resources != null ? <ResourceList resources={resources} categories={categories} /> : undefined}
+            </section>
         </div>
 
     );

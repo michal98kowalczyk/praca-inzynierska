@@ -50,7 +50,7 @@ public class NameSpaceController {
     public ResponseEntity<NameSpaceWrapper> deleteNameSpace(@PathVariable("id") String id) {
         NameSpace ns = nameSpaceService.deleteNameSpace(id);
         if (ns == null){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.unprocessableEntity().build();
         }
         return ResponseEntity.ok(nameSpaceService.convert(ns));
     }

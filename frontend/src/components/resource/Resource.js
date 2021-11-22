@@ -1,10 +1,10 @@
-import '../../styles/verb/Verb.css';
+import '../../styles/resource/Resource.css';
 import { useState } from 'react';
 
-const Verb = ({ id, verb }) => {
+const Resource = ({ id, name, category, categories }) => {
 
     const [isEdit, setIsEdit] = useState(false);
-    const [newVerb, setNewVerb] = useState(verb);
+    const [newResource, setNewResource] = useState(name);
 
     const handleOnClick = (e) => {
         e.preventDefault();
@@ -12,13 +12,13 @@ const Verb = ({ id, verb }) => {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*" }
         };
-        fetch(`http://localhost:8080/api/verb/${id}`, requestOptions)
+        fetch(`http://localhost:8080/api/resource/${id}`, requestOptions)
             .then(response => {
                 if (response.status === 200) {
-                    alert("Relacje Usunieto!");
+                    alert("Czynnik Usunieto!");
                     return response.json();
                 } else {
-                    alert("Bład! Relacja jest w użyciu!")
+                    alert("Bład! Czynnik jest w użyciu!")
                 }
 
             })
@@ -29,33 +29,34 @@ const Verb = ({ id, verb }) => {
 
     }
 
-    const handleOnVerbChange = (e) => setNewVerb(e.target.value);
+    const handleOnResourceChange = (e) => setNewResource(e.target.value);
 
     const handleOnEditSubmit = (e) => {
         e.preventDefault();
-        if (newVerb === "") {
-            alert("Wprowadz relacje");
+
+        if (newResource === "") {
+            alert("Wprowadz czynnik");
             return;
         }
 
-        const verb = {
-            verb: newVerb
+        const resource2Update = {
+            name: newResource
         };
 
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(verb)
+            body: JSON.stringify(resource2Update)
         };
-        fetch(`http://localhost:8080/api/verb/${id}`, requestOptions)
+        fetch(`http://localhost:8080/api/resource/${id}`, requestOptions)
             .then(response => {
                 if (response.status === 200) return response.json();
 
-                if (response.status === 422) alert("Relacja juz istnieje!");
+                if (response.status === 422) alert("Czynnik juz istnieje!");
             })
             .then(data => {
 
-                setNewVerb("");
+                setNewResource("");
                 window.location.reload(false);
             })
             .catch(err => console.log(err));
@@ -66,9 +67,10 @@ const Verb = ({ id, verb }) => {
 
     const handleOnEditClick = () => setIsEdit(p => !p);
     const editForm = (
-        <form className="verbForm">
-            <label onSubmit={handleOnEditSubmit}>
-                <input type="text" value={newVerb} onChange={handleOnVerbChange} />
+        <form className="resourceForm" onSubmit="">
+            <label >
+                <input type="text" value={newResource} onChange={handleOnResourceChange} />
+                <input type="text" value={category.name} disabled />
 
                 <button onClick={handleOnEditSubmit}>Zatwierdź</button>
                 <button onClick={handleOnEditClick}>Wróć</button>
@@ -78,12 +80,11 @@ const Verb = ({ id, verb }) => {
     )
 
 
-    const verbItem = <li className="verbItem">{` verb: ${verb}`} <button onClick={handleOnEditClick}>Edytuj</button> <button onClick={handleOnClick}>Usun</button></li>
-
+    const resourceItem = <li className="resourceItem">{` name: ${name} category: ${category.name}`} <button onClick={handleOnEditClick}>Edytuj</button> <button onClick={handleOnClick}>Usun</button></li>
 
     return (
-        <> {isEdit ? editForm : verbItem}</>
+        <> {isEdit ? editForm : resourceItem}</>
     );
 }
 
-export default Verb;
+export default Resource;

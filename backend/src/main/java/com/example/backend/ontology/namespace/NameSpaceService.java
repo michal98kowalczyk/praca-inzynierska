@@ -1,6 +1,8 @@
 package com.example.backend.ontology.namespace;
 
 import com.example.backend.ontology.model.Model;
+import com.example.backend.ontology.resource.Resource;
+import com.example.backend.ontology.resource.ResourceService;
 import com.example.backend.ontology.wrapper.NameSpaceWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,9 @@ public class NameSpaceService {
 
     @Autowired
     private NameSpaceRepository nameSpaceRepository;
+
+    @Autowired
+    private ResourceService resourceService;
 
     public List<NameSpace> getNameSpaces() {
         return nameSpaceRepository.findAll();
@@ -47,6 +52,9 @@ public class NameSpaceService {
         if (nameSpace.isEmpty()) {
             return null;
         }
+        List<Resource> resourcesByNameSpaceId = resourceService.getResourcesByNameSpaceId(Long.parseLong(id));
+        if (!resourcesByNameSpaceId.isEmpty())return null;
+
         nameSpaceRepository.delete(nameSpace.get());
         return nameSpace.get();
     }
