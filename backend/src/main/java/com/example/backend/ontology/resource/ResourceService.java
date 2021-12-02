@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ResourceService {
@@ -31,8 +32,22 @@ public class ResourceService {
     @Autowired
     private ResourcePropertyService resourcePropertyService;
 
+    public List<Resource> getSources(){
+
+        List<Resource> all = resourceRepository.findAll()
+                .stream()
+                .filter(resource -> resource.getNameSpace().getName().equals("Źródło"))
+                .collect(Collectors.toList());
+        return all;
+    }
+
     public List<Resource> getResources(){
-        return resourceRepository.findAll();
+
+        List<Resource> all = resourceRepository.findAll()
+                .stream()
+                .filter(resource -> !resource.getNameSpace().getName().equals("Źródło"))
+                .collect(Collectors.toList());
+        return all;
     }
 
     public List<Resource> getResourcesByNameSpaceId(Long id){

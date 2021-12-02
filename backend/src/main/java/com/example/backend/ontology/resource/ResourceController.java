@@ -17,6 +17,15 @@ public class ResourceController {
     @Autowired
     private ResourceService resourceService;
 
+    @GetMapping("sources")
+    public ResponseEntity<List<ResourceWrapper>> getSources(){
+        List<Resource> resourceList = resourceService.getSources();
+        if (resourceList.isEmpty())return ResponseEntity.notFound().build();
+        List<ResourceWrapper> resourceWrapperList = new ArrayList<>();
+        resourceList.forEach( res -> resourceWrapperList.add(resourceService.convert(res)));
+        return ResponseEntity.ok(resourceWrapperList);
+    }
+
     @GetMapping("resources")
     public ResponseEntity<List<ResourceWrapper>> getResources(){
         List<Resource> resourceList = resourceService.getResources();

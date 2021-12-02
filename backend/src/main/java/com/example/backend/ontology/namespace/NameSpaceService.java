@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class NameSpaceService {
@@ -22,7 +23,11 @@ public class NameSpaceService {
     private ResourceService resourceService;
 
     public List<NameSpace> getNameSpaces() {
-        return nameSpaceRepository.findAll();
+
+        return nameSpaceRepository.findAll()
+                .stream()
+                .filter(nameSpace -> !nameSpace.getName().equals("Źródło"))
+                .collect(Collectors.toList());
     }
 
     public NameSpace getNameSpace(String name) {
