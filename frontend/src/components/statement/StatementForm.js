@@ -142,6 +142,11 @@ const StatementForm = () => {
                 name: subject,
                 nameSpace: { name: subjectCategory }
             },
+            source: {
+                name: "strona internetowa",
+                nameSpace: { name: "Źródło" },
+                properties: [{ "key": "autor", "value": "ja" }]
+            },
             predicate: { verb: predicate },
             probability: probability
         }

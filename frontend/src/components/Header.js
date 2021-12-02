@@ -9,6 +9,8 @@ const Header = () => {
                 <button>
                     <Link to="/" >Strona główna</ Link ></button>
                 <button>
+                    <Link to="/source/form" >Dodaj źródło</ Link ></button>
+                <button>
                     <Link to="/model/form" >Dodaj model</ Link ></button>
                 <button>
                     <Link to="/statement/form" >Dodaj statement</ Link ></button>
