@@ -38,6 +38,10 @@ public class Statement {
     boolean isLit;
 
     @ManyToOne
+    @JoinColumn(name = "source")
+    private Resource source;
+
+    @ManyToOne
     @JoinColumn(name = "subject")
     private Resource subject;
 

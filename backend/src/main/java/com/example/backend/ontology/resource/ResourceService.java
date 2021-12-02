@@ -3,6 +3,9 @@ package com.example.backend.ontology.resource;
 import com.example.backend.ontology.literal.Literal;
 import com.example.backend.ontology.namespace.NameSpace;
 import com.example.backend.ontology.namespace.NameSpaceService;
+import com.example.backend.ontology.property.Property;
+import com.example.backend.ontology.resourceproperty.ResourceProperty;
+import com.example.backend.ontology.resourceproperty.ResourcePropertyService;
 import com.example.backend.ontology.statement.Statement;
 import com.example.backend.ontology.statement.StatementService;
 import com.example.backend.ontology.wrapper.LiteralWrapper;
@@ -25,6 +28,9 @@ public class ResourceService {
     @Autowired
     private StatementService statementService;
 
+    @Autowired
+    private ResourcePropertyService resourcePropertyService;
+
     public List<Resource> getResources(){
         return resourceRepository.findAll();
     }
@@ -42,6 +48,15 @@ public class ResourceService {
         return resource.get();
     }
 
+    public Resource getResourceById(String id) {
+
+        Optional<Resource> byId = resourceRepository.findById(Long.parseLong(id));
+        if (byId.isPresent()){
+            return byId.get();
+        }
+        return null;
+    }
+
 
 
     public Resource addResource(Resource resource) {
@@ -55,7 +70,15 @@ public class ResourceService {
             nameSpaceFromDb = nameSpaceService.getExistNameSpaceByName(nameSpace.getName());
         }
         resource.setNameSpace(nameSpaceFromDb);
-        return resourceRepository.save(resource);
+        Resource saved = resourceRepository.save(resource);
+
+        List<ResourceProperty> properties = resource.getProperties();
+        if(properties!=null){
+            properties.forEach(property -> property.setResource(saved));
+            resourcePropertyService.addResourceProperties(properties);
+        }
+
+        return saved;
     }
 
     public Resource getExistResourceByName(String name){
@@ -65,7 +88,9 @@ public class ResourceService {
     public ResourceWrapper convert(Resource resource) {
         if (resource != null){
             return ResourceWrapper.builder().id(resource.getId()).name(resource.getName())
-                    .namespace(nameSpaceService.convert(resource.getNameSpace())).build();
+                    .namespace(nameSpaceService.convert(resource.getNameSpace()))
+                    .properties(resourcePropertyService.convert(resourcePropertyService.getByResourceId(resource.getId())))
+                    .build();
         }else
             return null;
     }
