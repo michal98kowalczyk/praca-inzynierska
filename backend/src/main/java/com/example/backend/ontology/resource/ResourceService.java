@@ -120,6 +120,7 @@ public class ResourceService {
         List<Statement> statementsByResourceId = statementService.getStatementsByResourceId(Long.parseLong(id));
         if (!statementsByResourceId.isEmpty() || !statementsBySubjectId.isEmpty())return null;
 
+        resourcePropertyService.deleteProperties(res.get().getProperties());
         resourceRepository.delete(res.get());
         return res.get();
     }
@@ -135,7 +136,9 @@ public class ResourceService {
 
     private Resource getEntityToUpdate(Resource current, Resource resourceToUpdate) {
         return Resource.builder().id(current.getId()).name(resourceToUpdate.getName())
-                .nameSpace(current.getNameSpace()).statements(current.getStatements()).build();
+                .nameSpace(current.getNameSpace())
+                .properties(current.getProperties())
+                .statements(current.getStatements()).build();
 
     }
 }

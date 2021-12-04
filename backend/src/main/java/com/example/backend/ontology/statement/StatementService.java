@@ -224,8 +224,14 @@ public class StatementService {
         if (s.isEmpty()) {
             return null;
         }
+
+
+
         propertyService.deleteProperties(s.get().getProperties());
         statementRepository.delete(s.get());
+
+        if(s.get().isLit)literalService.deleteLiteral(s.get().getLiteral().getId().toString());
+        
         return s.get();
     }
 

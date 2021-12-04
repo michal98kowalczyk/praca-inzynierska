@@ -1,0 +1,58 @@
+
+.sourceItem button{
+    margin-left: 20px;
+    width: 60px;
+}
+.sourceItem button:hover{
+    background-color: rgb(175, 175, 175);
+}
+
+.sourceEditForm{
+    background-color: rgba(150, 150, 150, 0.767);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex-shrink: 1;
+    flex-grow: 1;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    padding: 10px ;
+}
+
+.sourceEditForm label{
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.sourceEditForm input
+{
+    border: 2px solid black;
+    padding: 10px;
+    margin-right: 20px;
+    width: 30%;
+    background-color: rgba(255, 255, 255, 0.712);
+}
+
+.sourceEditForm input:focus{
+    border: 2px solid black;
+    padding: 10px;
+    margin-right: 20px;
+    background-color: rgba(255, 255, 255, 0.712);
+}
+.sourceEditForm button{
+    height: 40px;
+    cursor: pointer;
+    background-color: #000;
+    border: 2px solid black;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: whitesmoke;
+    transition: .2s;
+    padding: 10px;
+}
+
+.sourceEditForm button:hover{
+    border: 2px solid whitesmoke;
+}

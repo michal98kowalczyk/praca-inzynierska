@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ResourcePropertyService {
@@ -46,6 +47,21 @@ public class ResourcePropertyService {
         List<ResourcePropertyWrapper> propertyWrappers = new ArrayList<>();
         properties.forEach(property -> propertyWrappers.add(convert(property)));
         return propertyWrappers;
+    }
+
+    public ResourceProperty deleteResourceProperty(String id) {
+        Optional<ResourceProperty> p = resourcePropertyRepository.findById(Long.parseLong(id));
+        if (p.isEmpty()) {
+            return null;
+        }
+        resourcePropertyRepository.delete(p.get());
+        return p.get();
+    }
+
+    public List<ResourceProperty> deleteProperties(List<ResourceProperty> properties) {
+        List<ResourceProperty> res = new ArrayList<>();
+        properties.forEach(p -> res.add(deleteResourceProperty(p.getId().toString())));
+        return res;
     }
 /*
 

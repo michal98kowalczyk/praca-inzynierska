@@ -28,6 +28,7 @@ public class BackendApplication {
                 registry.addMapping("/api/model").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/model/{id}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/model/add").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+                registry.addMapping("/api/sources").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/resources").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/resource/{name}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/resource/add").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");

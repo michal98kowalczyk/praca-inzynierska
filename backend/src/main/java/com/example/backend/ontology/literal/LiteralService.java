@@ -1,6 +1,8 @@
 package com.example.backend.ontology.literal;
 
 import com.example.backend.ontology.model.Model;
+import com.example.backend.ontology.resource.Resource;
+import com.example.backend.ontology.statement.Statement;
 import com.example.backend.ontology.wrapper.LiteralWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,5 +68,15 @@ public class LiteralService {
         }else
             return null;
 
+    }
+
+    public Literal deleteLiteral(String id) {
+        Optional<Literal> l = literalRepository.findById(Long.parseLong(id));
+        if (l.isEmpty()) {
+            return null;
+        }
+
+        literalRepository.delete(l.get());
+        return l.get();
     }
 }
