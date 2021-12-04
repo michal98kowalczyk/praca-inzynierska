@@ -3,6 +3,9 @@ package com.example.backend.ontology.resource;
 import com.example.backend.ontology.literal.Literal;
 import com.example.backend.ontology.namespace.NameSpace;
 import com.example.backend.ontology.namespace.NameSpaceService;
+import com.example.backend.ontology.property.Property;
+import com.example.backend.ontology.resourceproperty.ResourceProperty;
+import com.example.backend.ontology.resourceproperty.ResourcePropertyService;
 import com.example.backend.ontology.statement.Statement;
 import com.example.backend.ontology.statement.StatementService;
 import com.example.backend.ontology.wrapper.LiteralWrapper;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ResourceService {
@@ -25,8 +29,25 @@ public class ResourceService {
     @Autowired
     private StatementService statementService;
 
+    @Autowired
+    private ResourcePropertyService resourcePropertyService;
+
+    public List<Resource> getSources(){
+
+        List<Resource> all = resourceRepository.findAll()
+                .stream()
+                .filter(resource -> resource.getNameSpace().getName().equals("Źródło"))
+                .collect(Collectors.toList());
+        return all;
+    }
+
     public List<Resource> getResources(){
-        return resourceRepository.findAll();
+
+        List<Resource> all = resourceRepository.findAll()
+                .stream()
+                .filter(resource -> !resource.getNameSpace().getName().equals("Źródło"))
+                .collect(Collectors.toList());
+        return all;
     }
 
     public List<Resource> getResourcesByNameSpaceId(Long id){
@@ -42,6 +63,15 @@ public class ResourceService {
         return resource.get();
     }
 
+    public Resource getResourceById(String id) {
+
+        Optional<Resource> byId = resourceRepository.findById(Long.parseLong(id));
+        if (byId.isPresent()){
+            return byId.get();
+        }
+        return null;
+    }
+
 
 
     public Resource addResource(Resource resource) {
@@ -55,7 +85,15 @@ public class ResourceService {
             nameSpaceFromDb = nameSpaceService.getExistNameSpaceByName(nameSpace.getName());
         }
         resource.setNameSpace(nameSpaceFromDb);
-        return resourceRepository.save(resource);
+        Resource saved = resourceRepository.save(resource);
+
+        List<ResourceProperty> properties = resource.getProperties();
+        if(properties!=null){
+            properties.forEach(property -> property.setResource(saved));
+            resourcePropertyService.addResourceProperties(properties);
+        }
+
+        return saved;
     }
 
     public Resource getExistResourceByName(String name){
@@ -65,7 +103,9 @@ public class ResourceService {
     public ResourceWrapper convert(Resource resource) {
         if (resource != null){
             return ResourceWrapper.builder().id(resource.getId()).name(resource.getName())
-                    .namespace(nameSpaceService.convert(resource.getNameSpace())).build();
+                    .namespace(nameSpaceService.convert(resource.getNameSpace()))
+                    .properties(resourcePropertyService.convert(resourcePropertyService.getByResourceId(resource.getId())))
+                    .build();
         }else
             return null;
     }
@@ -80,6 +120,7 @@ public class ResourceService {
         List<Statement> statementsByResourceId = statementService.getStatementsByResourceId(Long.parseLong(id));
         if (!statementsByResourceId.isEmpty() || !statementsBySubjectId.isEmpty())return null;
 
+        resourcePropertyService.deleteProperties(res.get().getProperties());
         resourceRepository.delete(res.get());
         return res.get();
     }
@@ -95,7 +136,9 @@ public class ResourceService {
 
     private Resource getEntityToUpdate(Resource current, Resource resourceToUpdate) {
         return Resource.builder().id(current.getId()).name(resourceToUpdate.getName())
-                .nameSpace(current.getNameSpace()).statements(current.getStatements()).build();
+                .nameSpace(current.getNameSpace())
+                .properties(current.getProperties())
+                .statements(current.getStatements()).build();
 
     }
 }

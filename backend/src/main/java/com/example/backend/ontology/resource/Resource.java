@@ -2,6 +2,8 @@ package com.example.backend.ontology.resource;
 
 
 import com.example.backend.ontology.namespace.NameSpace;
+import com.example.backend.ontology.property.Property;
+import com.example.backend.ontology.resourceproperty.ResourceProperty;
 import com.example.backend.ontology.statement.Statement;
 import lombok.*;
 
@@ -30,4 +32,7 @@ public class Resource {
 
     @OneToMany(mappedBy = "resource")
     private List<Statement> statements;
+
+    @OneToMany(mappedBy = "resource")
+    private List<ResourceProperty> properties;
 }

@@ -79,6 +79,13 @@ public class StatementService {
         }
         statement.setModel(modelFromDb);
 
+        Resource source = statement.getSource();
+        Resource sourceFromDb = resourceService.addResource(source);
+        if (sourceFromDb == null){
+            sourceFromDb = resourceService.getExistResourceByName(source.getName());
+        }
+        statement.setSource(sourceFromDb);
+
         Literal literal = statement.getLiteral();
         if(literal != null){
             Literal literalFromDb = literalService.addLiteral(literal);
@@ -135,7 +142,7 @@ public class StatementService {
         }
 
 
-        runPrediction(createdStatement);
+        //runPrediction(createdStatement);
 
         return createdStatement;
     }
@@ -217,8 +224,14 @@ public class StatementService {
         if (s.isEmpty()) {
             return null;
         }
+
+
+
         propertyService.deleteProperties(s.get().getProperties());
         statementRepository.delete(s.get());
+
+        if(s.get().isLit)literalService.deleteLiteral(s.get().getLiteral().getId().toString());
+        
         return s.get();
     }
 
@@ -252,6 +265,7 @@ public class StatementService {
         }
         StatementOutputWrapper statementOutputWrapper = new StatementOutputWrapper();
         statementOutputWrapper.setId(statement.getId());
+        statementOutputWrapper.setSource(resourceService.convert(statement.getSource()));
         statementOutputWrapper.setSubject(resourceService.convert(statement.getSubject()));
         statementOutputWrapper.setPredicate(verbService.convert(statement.getPredicate()));
         statementOutputWrapper.setResource(resourceService.convert(statement.getResource()));

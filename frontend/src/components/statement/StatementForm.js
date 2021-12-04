@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 const StatementForm = () => {
     const [currentModels, setCurrentModels] = useState(null);
     const [currentResources, setCurrentResources] = useState(null);
+    const [currentSources, setCurrentSources] = useState(null);
     const [currentVerbs, setCurrentVerbs] = useState(null);
 
     useEffect(() => {
@@ -18,6 +19,13 @@ const StatementForm = () => {
             .then(response => response.json())
             .then(data => {
                 setCurrentResources(data);
+            })
+            .catch(err => console.log(err));
+
+        fetch('http://localhost:8080/api/sources')
+            .then(response => response.json())
+            .then(data => {
+                setCurrentSources(data);
             })
             .catch(err => console.log(err));
 
@@ -36,6 +44,7 @@ const StatementForm = () => {
     const [subjectCategory, setSubjectCategory] = useState("");
     const [predicate, setPredicate] = useState("-");
     const [resource, setResource] = useState("-");
+    const [source, setSource] = useState("-");
     const [resourceCategory, setResourceCategory] = useState("");
     const [literal, setLiteral] = useState("");
     const [probability, setProbability] = useState();
@@ -60,11 +69,16 @@ const StatementForm = () => {
     const handleOnModelNameChange = (e) => {
         setModelName(e.target.value);
     }
+
+    const handleOnSourceChange = (e) => {
+        setSource(e.target.value);
+    }
+
     const handleOnSubjectChange = (e) => {
         setSubject(e.target.value);
 
         let r = currentResources.find(r => r.name === e.target.value);
-        if (r.namespace != null) {
+        if (r && r.namespace != null) {
             setSubjectCategory(r.namespace.name);
         }
     }
@@ -75,7 +89,7 @@ const StatementForm = () => {
         setResource(e.target.value);
 
         let r = currentResources.find(r => r.name === e.target.value);
-        if (r.namespace != null) {
+        if (r && r.namespace != null) {
             setResourceCategory(r.namespace.name);
         }
     }
@@ -94,6 +108,11 @@ const StatementForm = () => {
 
     const handleOnClick = (e) => {
         e.preventDefault();
+
+        if (source === "" || source === "-") {
+            alert("Wybierz źródło");
+            return;
+        }
 
         if (modelName === "" || modelName === "-") {
             alert("Wprowadz nazwe modelu");
@@ -142,6 +161,9 @@ const StatementForm = () => {
                 name: subject,
                 nameSpace: { name: subjectCategory }
             },
+            source: {
+                name: source
+            },
             predicate: { verb: predicate },
             probability: probability
         }
@@ -182,6 +204,13 @@ const StatementForm = () => {
 
     return (
         <form className="statementForm">
+            <label htmlFor="source">Źródło
+            </label>
+            <select id="source" value={source} onChange={handleOnSourceChange} required>
+                <option>-</option>
+                {currentSources != null ? currentSources.map(r => <option>{r.name}</option>) : undefined}
+            </select>
+
             <label htmlFor="m_name">Nazwa modelu
 
 

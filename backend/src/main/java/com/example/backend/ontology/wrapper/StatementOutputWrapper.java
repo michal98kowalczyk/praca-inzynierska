@@ -18,6 +18,8 @@ public class StatementOutputWrapper {
 
     private Long id;
 
+    ResourceWrapper source;
+
     ResourceWrapper subject;
 
     VerbWrapper predicate;

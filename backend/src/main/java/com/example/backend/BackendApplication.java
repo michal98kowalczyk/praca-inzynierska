@@ -1,13 +1,19 @@
 package com.example.backend;
 
+import com.example.backend.ontology.namespace.NameSpace;
+import com.example.backend.ontology.namespace.NameSpaceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.xml.stream.events.Namespace;
+
 @SpringBootApplication
 public class BackendApplication {
+
 
     public static void main(String[] args) {
         SpringApplication.run(BackendApplication.class, args);
@@ -22,6 +28,7 @@ public class BackendApplication {
                 registry.addMapping("/api/model").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/model/{id}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/model/add").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+                registry.addMapping("/api/sources").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/resources").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/resource/{name}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/resource/add").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
