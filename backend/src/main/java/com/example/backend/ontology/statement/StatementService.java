@@ -142,7 +142,7 @@ public class StatementService {
         }
 
 
-        //runPrediction(createdStatement);
+        runPrediction(createdStatement);
 
         return createdStatement;
     }
@@ -157,6 +157,7 @@ public class StatementService {
 
             for (Statement s : byResourceAsSubject) {
                 Statement statement = new Statement();
+                statement.setSource(resourceService.getExistResourceByName("Automatically prediction"));
                 statement.setModel(createdStatement.getModel());
                 // add to another model if resource was a model e.g kurczak szkodzi na cukrzyce ..
                 Resource rFromS = s.getResource();
@@ -184,6 +185,7 @@ public class StatementService {
 
         for (Statement s : bySubjectAsResource) {
             Statement statement = new Statement();
+            statement.setSource(resourceService.getExistResourceByName("Automatically prediction"));
             statement.setModel(createdStatement.getModel());
 
             // add to another model if resource was a model e.g cukrzyca szkodzi na reumatoidalne .. powinno byc dodane do modelu tego drugiego
@@ -231,7 +233,7 @@ public class StatementService {
         statementRepository.delete(s.get());
 
         if(s.get().isLit)literalService.deleteLiteral(s.get().getLiteral().getId().toString());
-        
+
         return s.get();
     }
 

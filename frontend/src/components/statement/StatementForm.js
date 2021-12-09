@@ -208,7 +208,7 @@ const StatementForm = () => {
             </label>
             <select id="source" value={source} onChange={handleOnSourceChange} required>
                 <option>-</option>
-                {currentSources != null ? currentSources.map(r => <option>{r.name}</option>) : undefined}
+                {currentSources != null ? currentSources.filter(s => s.name !== "Automatically prediction").map(r => <option>{r.name}</option>) : undefined}
             </select>
 
             <label htmlFor="m_name">Nazwa modelu
