@@ -116,7 +116,7 @@ const SourceForm = () => {
 
                 <h2>Dostepne źródła</h2>
 
-                {sources != null ? <SourceList sources={sources} /> : undefined}
+                {sources != null ? <SourceList sources={sources.filter(s => s.name !== "Automatically prediction")} /> : undefined}
             </section>
         </div>
 
