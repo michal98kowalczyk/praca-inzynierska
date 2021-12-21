@@ -41,13 +41,13 @@ const StatementForm = () => {
 
     }, []);
 
-    const [modelName, setModelName] = useState("");
-    const [subject, setSubject] = useState("-");
-    const [subjectCategory, setSubjectCategory] = useState("");
-    const [predicate, setPredicate] = useState("-");
-    const [resource, setResource] = useState("-");
-    const [source, setSource] = useState("-");
-    const [resourceCategory, setResourceCategory] = useState("");
+    const [modelName, setModelName] = useState(sessionStorage.getItem('modelName') ? sessionStorage.getItem('modelName') : "");
+    const [subject, setSubject] = useState(sessionStorage.getItem('subject') ? sessionStorage.getItem('subject') : "-");
+    const [subjectCategory, setSubjectCategory] = useState(sessionStorage.getItem('subjectCategory') ? sessionStorage.getItem('subjectCategory') : "");
+    const [predicate, setPredicate] = useState(sessionStorage.getItem('predicate') ? sessionStorage.getItem('predicate') : "-");
+    const [resource, setResource] = useState(sessionStorage.getItem('resource') ? sessionStorage.getItem('resource') : "-");
+    const [source, setSource] = useState(sessionStorage.getItem('source') ? sessionStorage.getItem('source') : "-");
+    const [resourceCategory, setResourceCategory] = useState(sessionStorage.getItem('resourceCategory') ? sessionStorage.getItem('resourceCategory') : "");
     const [literal, setLiteral] = useState("");
     const [probability, setProbability] = useState();
     const [properties, setProperties] = useState([{ key: "", value: "" }])
@@ -70,29 +70,36 @@ const StatementForm = () => {
 
     const handleOnModelNameChange = (e) => {
         setModelName(e.target.value);
+        sessionStorage.setItem('modelName', e.target.value);
     }
 
     const handleOnSourceChange = (e) => {
         setSource(e.target.value);
+        sessionStorage.setItem('source', e.target.value);
     }
 
     const handleOnSubjectChange = (e) => {
         setSubject(e.target.value);
+        sessionStorage.setItem('subject', e.target.value);
 
         let r = currentResources.find(r => r.name === e.target.value);
         if (r && r.namespace != null) {
             setSubjectCategory(r.namespace.name);
+            sessionStorage.setItem('subjectCategory', r.namespace.name);
         }
     }
     const handleOnPredicateChange = (e) => {
         setPredicate(e.target.value);
+        sessionStorage.setItem('predicate', e.target.value);
     }
     const handleOnResourceChange = (e) => {
         setResource(e.target.value);
+        sessionStorage.setItem('resource', e.target.value);
 
         let r = currentResources.find(r => r.name === e.target.value);
         if (r && r.namespace != null) {
             setResourceCategory(r.namespace.name);
+            sessionStorage.setItem('resourceCategory', r.namespace.name);
         }
     }
     const handleOnLiteralChange = (e) => {
@@ -155,7 +162,6 @@ const StatementForm = () => {
             alert("Błędne probability");
             return;
         }
-
         const statement = {
             model: { name: modelName },
             properties: properties,
@@ -164,7 +170,7 @@ const StatementForm = () => {
                 nameSpace: { name: subjectCategory }
             },
             source: {
-                name: source
+                name: source.split(' |: ')[0].trim()
             },
             predicate: { verb: predicate },
             probability: probability
@@ -181,7 +187,7 @@ const StatementForm = () => {
                 nameSpace: { name: resourceCategory }
             }
         }
-        // console.log('statement ' + JSON.stringify(statement));
+        //console.log('statement ' + JSON.stringify(statement));
 
 
         const requestOptions = {
@@ -211,13 +217,13 @@ const StatementForm = () => {
             <select id="source" value={source} onChange={handleOnSourceChange} required>
                 <option>-</option>
                 {currentSources != null ? currentSources.map(r => {
-                    let option2Display = `${r.name} `;
+                    let option2Display = `${r.name} |: `;
 
                     for (const idx in r.properties) {
                         option2Display += ` ${r.properties[idx].key}: ${r.properties[idx].value} `;
 
                     }
-                    return <option>{option2Display}  </option>
+                    return <option >{option2Display}  </option>
                 }) : undefined}
             </select>
 
