@@ -12,7 +12,7 @@ const ModelForm = () => {
         e.preventDefault();
 
         if (modelName === "") {
-            alert("Wprowadz nazwe modelu");
+            alert("Wprowadz nazwe zbioru");
             return;
         }
 
@@ -40,7 +40,7 @@ const ModelForm = () => {
 
     return (
         <form className="model">
-            <h2>Formularz dodania modelu </h2>
+            <h2>Formularz dodania zbioru </h2>
             <label htmlFor="m_name"></label>
             <input id="m_name" type="text" placeholder="Wprowadź nazwe" value={modelName} onChange={handleOnChange} />
 
