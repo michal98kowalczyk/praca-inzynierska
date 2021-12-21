@@ -11,9 +11,9 @@ const Header = () => {
                 <button>
                     <Link to="/source/form" >Dodaj źródło</ Link ></button>
                 <button>
-                    <Link to="/model/form" >Dodaj model</ Link ></button>
+                    <Link to="/model/form" >Dodaj zbiór</ Link ></button>
                 <button>
-                    <Link to="/statement/form" >Dodaj statement</ Link ></button>
+                    <Link to="/statement/form" >Dodaj stwierdzenie</ Link ></button>
                 <button>
                     <Link to="/category/form" >Dodaj kategorie</ Link ></button>
                 <button>

@@ -25,7 +25,9 @@ const StatementForm = () => {
         fetch('http://localhost:8080/api/sources')
             .then(response => response.json())
             .then(data => {
-                setCurrentSources(data);
+                let tmp = data.filter(s => s.name !== "Automatically prediction");
+
+                setCurrentSources(tmp);
             })
             .catch(err => console.log(err));
 
@@ -208,10 +210,18 @@ const StatementForm = () => {
             </label>
             <select id="source" value={source} onChange={handleOnSourceChange} required>
                 <option>-</option>
-                {currentSources != null ? currentSources.filter(s => s.name !== "Automatically prediction").map(r => <option>{r.name}</option>) : undefined}
+                {currentSources != null ? currentSources.map(r => {
+                    let option2Display = `${r.name} `;
+
+                    for (const idx in r.properties) {
+                        option2Display += ` ${r.properties[idx].key}: ${r.properties[idx].value} `;
+
+                    }
+                    return <option>{option2Display}  </option>
+                }) : undefined}
             </select>
 
-            <label htmlFor="m_name">Nazwa modelu
+            <label htmlFor="m_name">Nazwa zbioru
 
 
                 {/* <input id="m_name" type="text" placeholder="model" value={modelName} onChange={handleOnModelNameChange} /> */}
@@ -272,9 +282,8 @@ const StatementForm = () => {
                         <select name="key" value={element.key || ""} onChange={e => handleChange(index, e)} required>
                             <option>-</option>
                             <option>Autor</option>
-                            <option>Źródło</option>
                             <option>Data</option>
-                            <option>Wydawca</option>
+
                         </select>
                     </div>
                     {/* <input type="text" name="key" value={element.key || ""} onChange={e => handleChange(index, e)} /> */}

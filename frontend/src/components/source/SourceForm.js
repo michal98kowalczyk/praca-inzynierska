@@ -2,15 +2,23 @@ import '../../styles/source/SourceForm.css';
 import { useState, useEffect } from 'react';
 
 import SourceList from './SourceList';
+import BookForm from './BookForm';
+import OtherSourceForm from './OtherSourceForm';
+import ArticleForm from './ArticleForm';
 
 const SOURCE_NAME = "Źródło";
+const BOOK = "book";
+const ARTICLE = "article";
+const OTHER = "other";
+const dict = {};
+
 
 const SourceForm = () => {
 
     const [sources, setSources] = useState(null);
+    const [type, setType] = useState(BOOK);
     const [source, setSource] = useState("");
-    const [properties, setProperties] = useState([{ key: "", value: "" }])
-
+    const [properties, setProperties] = useState(dict);
 
     useEffect(() => {
 
@@ -26,22 +34,21 @@ const SourceForm = () => {
     }, [])
 
     const handleOnSourceChange = (e) => setSource(e.target.value);
+    const handleOnTypeChange = (type) => {
+        setType(type);
+        setSource(null);
+        setProperties({});
 
-    let handleChange = (i, e) => {
-        let newFormValues = [...properties];
-        newFormValues[i][e.target.name] = e.target.value;
-        setProperties(newFormValues);
     }
 
-    let addFormFields = () => {
-        setProperties([...properties, { key: "", value: "" }])
+    const propertyChange = (key, value) => {
+        let newDict = properties;
+        newDict[key] = value;
+        setProperties(newDict);
     }
 
-    let removeFormFields = (i) => {
-        let newFormValues = [...properties];
-        newFormValues.splice(i, 1);
-        setProperties(newFormValues)
-    }
+
+
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
@@ -50,21 +57,29 @@ const SourceForm = () => {
             return;
         }
 
+        let mappedProperty = [];
+
+        for (let keyTmp in properties) {
+            mappedProperty = [...mappedProperty, { key: keyTmp, value: properties[keyTmp] }];
+        }
+
         const newSource = {
             name: source,
             nameSpace: { name: SOURCE_NAME },
-            properties: properties
+            properties: mappedProperty
         };
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newSource)
         };
+        console.log('newSource ' + JSON.stringify(newSource));
+
         fetch('http://localhost:8080/api/resource/add', requestOptions)
             .then(response => response.json())
             .then(data => {
                 setSource("")
-                setProperties([{ key: "", value: "" }]);
+                setProperties({});
                 window.location.reload(false);
             })
             .catch(err => console.log(err));
@@ -73,43 +88,38 @@ const SourceForm = () => {
 
     }
 
+    const renderSwitch = () => {
+        switch (type) {
+            case BOOK:
+                return <BookForm propertyChange={propertyChange} properties={properties} source={source} onSourceChange={handleOnSourceChange} />;
+            case ARTICLE:
+                return <ArticleForm propertyChange={propertyChange} properties={properties} source={source} onSourceChange={handleOnSourceChange} />
+
+            case OTHER:
+                return <OtherSourceForm propertyChange={propertyChange} properties={properties} source={source} onSourceChange={handleOnSourceChange} />
+
+        }
+    }
+
+
+
     return (
         <div className="SourceWrapper">
             <h2>Formularz dodania źródła</h2>
+
+
             <form className="sourceForm">
-                <label onSubmit="">
-                    <input type="text" value={source} onChange={handleOnSourceChange} placeholder="url..." required />
+                <div className="typeForm">
+                    <div className={type === BOOK ? 'isActive' : ''} onClick={() => handleOnTypeChange(BOOK)} >Książka</div>
+                    <div className={type === ARTICLE ? 'isActive' : ''} onClick={() => handleOnTypeChange(ARTICLE)} >Artykuł</div>
+                    <div className={type === OTHER ? 'isActive' : ''} onClick={() => handleOnTypeChange(OTHER)}>Inne</div>
 
-                </label>
+                </div>
 
-                {properties.map((element, index) => (
-                    <div className="form-inline" key={index}>
-                        <div className="keyWrapper">
-                            <label>Klucz</label>
-                            <select name="key" value={element.key || ""} onChange={e => handleChange(index, e)} required>
-                                <option>-</option>
-                                <option>Autor</option>
-                                <option>Źródło</option>
-                                <option>Data</option>
-                                <option>Wydawca</option>
-                            </select>
-                        </div>
-                        {/* <input type="text" name="key" value={element.key || ""} onChange={e => handleChange(index, e)} /> */}
-                        <div className="valueWrapper">
-                            <label>Wartość</label>
-                            {element.key === "Data" ? <input type="date" name="value" value={element.value || ""} onChange={e => handleChange(index, e)} /> : <input type="text" name="value" value={element.value || ""} onChange={e => handleChange(index, e)} />}
-                        </div>
-                        {
-                            index ?
-                                <button type="button" className="button remove" onClick={() => removeFormFields(index)}>Remove</button>
-                                : null
-                        }
-
-                    </div>
-                ))}
-                <button className="button add" type="button" onClick={() => addFormFields()}>Dodaj parametr</button>
+                {renderSwitch()}
 
                 <button onClick={handleOnSubmit}>Dodaj</button>
+
             </form>
 
             <section className="availableSources">

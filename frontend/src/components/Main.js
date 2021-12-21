@@ -26,7 +26,7 @@ const Main = () => {
 
         < main >
             <section>
-                <h1>Istniejace modele:</h1>
+                <h1>Istniejace zbiory:</h1>
                 {/* <ModelList models={models} /> */}
                 {models !== null ? <ModelList models={models} /> : undefined}
             </section>

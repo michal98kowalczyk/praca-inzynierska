@@ -55,3 +55,21 @@
 .sourceForm button:hover{
     border: 2px solid whitesmoke;
 }
+
+.sourceForm .typeForm{
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-gap: 10px;
+    margin-bottom: 10px;
+}
+
+.sourceForm .typeForm div{
+    color: white;
+    padding: 5px 10px ;
+    margin-top: 2px;
+    background-color: rgba(129, 125, 125, 0.562);
+}
+
+.sourceForm .typeForm .isActive{
+    background-color: rgba(70, 70, 70, 0.63);
+}
