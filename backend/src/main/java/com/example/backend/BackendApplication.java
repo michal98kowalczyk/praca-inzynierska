@@ -24,6 +24,8 @@ public class BackendApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
+
+                registry.addMapping("/api/model/{subject}/{predicate}/{resource}/{literal}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/models").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/model").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/model/{id}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
@@ -38,6 +40,7 @@ public class BackendApplication {
                 registry.addMapping("/api/namespace/{id}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/namespace/add").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/statement").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+                registry.addMapping("/api/statement/{id}/details").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/statement/{id}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/statement/add").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/statements").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");

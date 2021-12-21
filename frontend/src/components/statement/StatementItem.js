@@ -1,11 +1,14 @@
 import '../../styles/statement/StatementItem.css';
 import { useState } from 'react';
+import StatementItemDetails from './StatementItemDetails';
 
 
 
 const StatementItem = ({ statement }) => {
     const [isEdit, setIsEdit] = useState(false);
     const [newProbability, setNewProbability] = useState(statement.probablity);
+    const [isDetails, setIsDetails] = useState(false);
+    const [isStats, setIsStats] = useState(false);
 
     const properties = statement.properties.map(property => <><span>{property.key} </span>{property.value} </>)
     const handleOnClick = (e) => {
@@ -64,6 +67,13 @@ const StatementItem = ({ statement }) => {
 
 
     }
+    const showStats = () => {
+        setIsStats((prev) => !prev);
+    }
+
+    const showStatementDetails = () => {
+        setIsDetails((prev) => !prev);
+    }
 
     const handleOnNewProbabilityChange = (e) => setNewProbability(e.target.value);
 
@@ -116,13 +126,15 @@ const StatementItem = ({ statement }) => {
         {properties}
         <button onClick={handleOnEditClick}>Edytuj</button>
         <button onClick={handleOnClick}>Usun</button>
+        <button onClick={showStatementDetails}>Szczegóły</button>
     </li >
 
 
     return (
-
-        <> {isEdit ? editForm : statementItem}</>
-
+        <>
+            {isEdit ? editForm : statementItem}
+            {isDetails ? <StatementItemDetails statement={statement} closeDetails={setIsDetails} /> : undefined}
+        </>
     );
 }
 

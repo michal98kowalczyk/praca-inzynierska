@@ -46,6 +46,27 @@ public class StatementService {
         return statementRepository.findAll();
     }
 
+    public List<Statement> getStatementsForDetails(String statementId) {
+        Optional<Statement> byId = statementRepository.findById(Long.parseLong(statementId));
+        if(byId.isEmpty())return null;
+
+        Statement statement  = byId.get();
+        Resource subject = resourceService.getResource(statement.getSubject().getName());
+        Verb verb = verbService.getVerb(statement.getPredicate().getVerb());
+
+        if(statement.isRes){
+            Resource resource  = statement.getResource();
+            return  statementRepository.findAllBySubjectIdAndPredicateIdAndResourceId(subject.getId(),verb.getId(),resource.getId());
+        }else if(statement.isLit){
+            Literal literal = statement.getLiteral();
+            return  statementRepository.findAllBySubjectIdAndPredicateIdAndLiteralId(subject.getId(),verb.getId(),literal.getId());
+
+        }else{
+            return null;
+        }
+
+    }
+
     public List<Statement> getStatementsByModelId(Long id) {
         return  statementRepository.findAllByModelId(id);
     }
@@ -80,6 +101,7 @@ public class StatementService {
         statement.setModel(modelFromDb);
 
         Resource source = statement.getSource();
+        System.out.println(source);
         Resource sourceFromDb = resourceService.addResource(source);
         if (sourceFromDb == null){
             sourceFromDb = resourceService.getExistResourceByName(source.getName());

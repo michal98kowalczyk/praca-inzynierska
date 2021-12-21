@@ -58,6 +58,10 @@ public class LiteralService {
         return literalRepository.save(literal);
     }
 
+    public Literal getExistLiteralByValue(String value){
+        return literalRepository.findByValue(value).get();
+    }
+
     public Literal getExistLiteralByValueAndDataType(Literal literal){
         return literalRepository.findByValueAndDataType(literal.getValue(),literal.getDataType()).get();
     }

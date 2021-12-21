@@ -162,6 +162,8 @@ const StatementForm = () => {
             alert("Błędne probability");
             return;
         }
+
+
         const statement = {
             model: { name: modelName },
             properties: properties,
@@ -170,7 +172,7 @@ const StatementForm = () => {
                 nameSpace: { name: subjectCategory }
             },
             source: {
-                name: source.split(' |: ')[0].trim()
+                name: source.split(' |: ')[0].trim().replace('|:', '').trim()
             },
             predicate: { verb: predicate },
             probability: probability
