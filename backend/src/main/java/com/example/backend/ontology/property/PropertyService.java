@@ -32,7 +32,7 @@ public class PropertyService {
         List<Property> allByStatementId = propertyRepository.findAllByStatementId(Long.parseLong(statementId));
         boolean isPropertInStatementExist = false;
         //allByStatementId.forEach(System.out::println);
-        System.out.println(allByStatementId.get(0).getKey());
+
         for (Property p : allByStatementId) {
             if (p.getValue().equals(property.getValue())  && p.getKey().equals(property.getKey()) ) {
                 isPropertInStatementExist = true;

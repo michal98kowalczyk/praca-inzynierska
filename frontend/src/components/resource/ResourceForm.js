@@ -42,7 +42,7 @@ const ResourceForm = () => {
             return;
         }
         const resorce = {
-            name: resource,
+            name: resource.trim(),
             nameSpace: { name: category }
         };
 

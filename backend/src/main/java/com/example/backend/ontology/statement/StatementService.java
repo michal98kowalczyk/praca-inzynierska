@@ -101,7 +101,7 @@ public class StatementService {
         statement.setModel(modelFromDb);
 
         Resource source = statement.getSource();
-        System.out.println(source);
+
         Resource sourceFromDb = resourceService.addResource(source);
         if (sourceFromDb == null){
             sourceFromDb = resourceService.getExistResourceByName(source.getName());
@@ -232,6 +232,7 @@ public class StatementService {
         }
 
         if (!toUpdate.isEmpty()) {
+
             addStatements(toUpdate);
         }
     }

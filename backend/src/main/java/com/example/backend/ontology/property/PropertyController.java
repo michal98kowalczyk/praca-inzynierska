@@ -35,7 +35,7 @@ public class PropertyController {
 
     @PostMapping("statement/{id}/property/add")
     public ResponseEntity<PropertyWrapper> addProperty(@PathVariable("id") String statementId, @RequestBody Property property){
-        System.out.println(property);
+
         Property p = propertyService.addProperty(statementId,property);
         if (p == null){
             return ResponseEntity.unprocessableEntity().build();

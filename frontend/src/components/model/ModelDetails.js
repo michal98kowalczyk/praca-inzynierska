@@ -69,6 +69,8 @@ const ModelDetails = () => {
         let statements2display;
         if (searchingSubject !== '' && searchingSubject !== '-') {
             statements2display = statements.filter(s => s.subject.name === searchingSubject);
+        } else {
+            statements2display = statements;
         }
         if (searchingPredicate !== '' && searchingPredicate !== '-') {
             statements2display = statements2display.filter(s => s.predicate.verb === searchingPredicate);
