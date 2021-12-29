@@ -7,12 +7,17 @@ const CategoryForm = () => {
     const [newCategory, setNewCategory] = useState("");
 
     useEffect(() => {
+        console.log('czas pobrania kategorii ');
+        console.time("timer");
         fetch('http://localhost:8080/api/namespace')
             .then(response => response.json())
             .then(data => {
                 setCategories(data);
             })
             .catch(err => console.log(err));
+
+        console.timeEnd("timer");
+
 
 
     }, [])

@@ -9,13 +9,15 @@ const VerbForm = () => {
 
 
     useEffect(() => {
+        console.log('czas pobrania verbs ');
+        console.time("timer");
         fetch('http://localhost:8080/api/verbs')
             .then(response => response.json())
             .then(data => {
                 setVerbs(data);
             })
             .catch(err => console.log(err));
-
+        console.timeEnd("timer");
 
     }, [])
 

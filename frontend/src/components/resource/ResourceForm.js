@@ -18,13 +18,15 @@ const ResourceForm = () => {
             })
             .catch(err => console.log(err));
 
+        console.log('czas pobrania resources ');
+        console.time("timer");
         fetch('http://localhost:8080/api/resources')
             .then(response => response.json())
             .then(data => {
                 setResources(data);
             })
             .catch(err => console.log(err));
-
+        console.timeEnd("timer");
 
     }, [])
 

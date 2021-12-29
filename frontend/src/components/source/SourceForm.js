@@ -22,14 +22,15 @@ const SourceForm = () => {
 
     useEffect(() => {
 
-
+        console.log('czas pobrania sources ');
+        console.time("timer");
         fetch('http://localhost:8080/api/sources')
             .then(response => response.json())
             .then(data => {
                 setSources(data);
             })
             .catch(err => console.log(err));
-
+        console.timeEnd("timer");
 
     }, [])
 
