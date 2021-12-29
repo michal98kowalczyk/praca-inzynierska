@@ -62,12 +62,12 @@ ____
                     "dataType":"string"},
         "subject":  {
                     "name":"testt0",
-                    "nameSpace": {"name":"produkt"}},
+                    "category": {"name":"produkt"}},
         "predicate":  {
                     "verb":"testt"},
         "resource":  {
                     "name":"testt2",
-                    "nameSpace": {"name":"produk2t"}},
+                    "category": {"name":"produk2t"}},
         "probability": 0.8,
         "res": false,
         "lit": true
@@ -78,7 +78,7 @@ ____
     dla Resource
     {
         "name": "testChorowb",
-        "nameSpace": {
+        "category": {
             "name": "chorobaNow"
         }
 

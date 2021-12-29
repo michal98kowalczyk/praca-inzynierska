@@ -13,6 +13,6 @@ import java.util.List;
 public class ResourceWrapper {
     Long id;
     String name;
-    NameSpaceWrapper namespace;
+    CategoryWrapper category;
     List<ResourcePropertyWrapper> properties;
 }

@@ -1,8 +1,7 @@
 package com.example.backend.ontology.resource;
 
 
-import com.example.backend.ontology.namespace.NameSpace;
-import com.example.backend.ontology.property.Property;
+import com.example.backend.ontology.category.Category;
 import com.example.backend.ontology.resourceproperty.ResourceProperty;
 import com.example.backend.ontology.statement.Statement;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -28,8 +27,8 @@ public class Resource {
     private String name;
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "namespace_id")
-    private NameSpace nameSpace;
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @OneToMany(mappedBy = "resource")
     private List<Statement> statements;

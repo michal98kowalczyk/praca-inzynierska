@@ -11,7 +11,7 @@ const ResourceForm = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/namespace')
+        fetch('http://localhost:8080/api/category')
             .then(response => response.json())
             .then(data => {
                 setCategories(data);
@@ -43,7 +43,7 @@ const ResourceForm = () => {
         }
         const resorce = {
             name: resource.trim(),
-            nameSpace: { name: category }
+            category: { name: category }
         };
 
         const requestOptions = {
@@ -52,8 +52,12 @@ const ResourceForm = () => {
             body: JSON.stringify(resorce)
         };
         fetch('http://localhost:8080/api/resource/add', requestOptions)
-            .then(response => response.json())
+            .then(response => {
+
+                return response.json();
+            })
             .then(data => {
+
                 setCategory("");
                 setResource("")
                 window.location.reload(false);

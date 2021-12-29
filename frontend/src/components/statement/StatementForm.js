@@ -83,9 +83,9 @@ const StatementForm = () => {
         sessionStorage.setItem('subject', e.target.value);
 
         let r = currentResources.find(r => r.name === e.target.value);
-        if (r && r.namespace != null) {
-            setSubjectCategory(r.namespace.name);
-            sessionStorage.setItem('subjectCategory', r.namespace.name);
+        if (r && r.category != null) {
+            setSubjectCategory(r.category.name);
+            sessionStorage.setItem('subjectCategory', r.category.name);
         }
     }
     const handleOnPredicateChange = (e) => {
@@ -97,9 +97,9 @@ const StatementForm = () => {
         sessionStorage.setItem('resource', e.target.value);
 
         let r = currentResources.find(r => r.name === e.target.value);
-        if (r && r.namespace != null) {
-            setResourceCategory(r.namespace.name);
-            sessionStorage.setItem('resourceCategory', r.namespace.name);
+        if (r && r.category != null) {
+            setResourceCategory(r.category.name);
+            sessionStorage.setItem('resourceCategory', r.category.name);
         }
     }
     const handleOnLiteralChange = (e) => {
@@ -169,7 +169,7 @@ const StatementForm = () => {
             properties: properties,
             subject: {
                 name: subject,
-                nameSpace: { name: subjectCategory }
+                category: { name: subjectCategory }
             },
             source: {
                 name: source.split(' |: ')[0].trim().replace('|:', '').trim()
@@ -186,7 +186,7 @@ const StatementForm = () => {
         if (resource !== "" && resource !== "-") {
             statement.resource = {
                 name: resource,
-                nameSpace: { name: resourceCategory }
+                category: { name: resourceCategory }
             }
         }
         //console.log('statement ' + JSON.stringify(statement));

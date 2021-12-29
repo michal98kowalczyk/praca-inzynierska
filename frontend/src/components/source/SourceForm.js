@@ -65,7 +65,7 @@ const SourceForm = () => {
 
         const newSource = {
             name: source.trim(),
-            nameSpace: { name: SOURCE_NAME },
+            category: { name: SOURCE_NAME },
             properties: mappedProperty
         };
         const requestOptions = {

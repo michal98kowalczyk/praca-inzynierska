@@ -1,14 +1,11 @@
 package com.example.backend.ontology.resource;
 
-import com.example.backend.ontology.literal.Literal;
-import com.example.backend.ontology.namespace.NameSpace;
-import com.example.backend.ontology.namespace.NameSpaceService;
-import com.example.backend.ontology.property.Property;
+import com.example.backend.ontology.category.Category;
+import com.example.backend.ontology.category.CategoryService;
 import com.example.backend.ontology.resourceproperty.ResourceProperty;
 import com.example.backend.ontology.resourceproperty.ResourcePropertyService;
 import com.example.backend.ontology.statement.Statement;
 import com.example.backend.ontology.statement.StatementService;
-import com.example.backend.ontology.wrapper.LiteralWrapper;
 import com.example.backend.ontology.wrapper.ResourceWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +21,7 @@ public class ResourceService {
     private ResourceRepository resourceRepository;
 
     @Autowired
-    private NameSpaceService nameSpaceService;
+    private CategoryService categoryService;
 
     @Autowired
     private StatementService statementService;
@@ -38,7 +35,7 @@ public class ResourceService {
 
         List<Resource> all = resourceRepository.findAll()
                 .stream()
-                .filter(resource -> resource.getNameSpace().getName().equals(SOURCE_CATEGORY))
+                .filter(resource -> resource.getCategory().getName().equals(SOURCE_CATEGORY))
                 .collect(Collectors.toList());
         return all;
     }
@@ -47,13 +44,13 @@ public class ResourceService {
 
         List<Resource> all = resourceRepository.findAll()
                 .stream()
-                .filter(resource -> !resource.getNameSpace().getName().equals(SOURCE_CATEGORY))
+                .filter(resource -> !resource.getCategory().getName().equals(SOURCE_CATEGORY))
                 .collect(Collectors.toList());
         return all;
     }
 
-    public List<Resource> getResourcesByNameSpaceId(Long id){
-        return resourceRepository.findAllByNameSpaceId(id);
+    public List<Resource> getResourcesByCategoryId(Long id){
+        return resourceRepository.findAllByCategoryId(id);
     }
 
     public Resource getResource(String name) {
@@ -81,12 +78,12 @@ public class ResourceService {
         if (resourceFromDb.isPresent()) {
             return null;
         }
-        NameSpace nameSpace = resource.getNameSpace();
-        NameSpace nameSpaceFromDb = nameSpaceService.addNameSpace(nameSpace);
-        if(nameSpaceFromDb ==null){
-            nameSpaceFromDb = nameSpaceService.getExistNameSpaceByName(nameSpace.getName());
+        Category category = resource.getCategory();
+        Category categoryFromDb = categoryService.addCategory(category);
+        if(categoryFromDb ==null){
+            categoryFromDb = categoryService.getExistCategoryByName(category.getName());
         }
-        resource.setNameSpace(nameSpaceFromDb);
+        resource.setCategory(categoryFromDb);
         Resource saved = resourceRepository.save(resource);
 
         List<ResourceProperty> properties = resource.getProperties();
@@ -105,7 +102,7 @@ public class ResourceService {
     public ResourceWrapper convert(Resource resource) {
         if (resource != null){
             return ResourceWrapper.builder().id(resource.getId()).name(resource.getName())
-                    .namespace(nameSpaceService.convert(resource.getNameSpace()))
+                    .category(categoryService.convert(resource.getCategory()))
                     .properties(resourcePropertyService.convert(resourcePropertyService.getByResourceId(resource.getId())))
                     .build();
         }else
@@ -139,7 +136,7 @@ public class ResourceService {
 
     private Resource getEntityToUpdate(Resource current, Resource resourceToUpdate) {
         return Resource.builder().id(current.getId()).name(resourceToUpdate.getName())
-                .nameSpace(current.getNameSpace())
+                .category(current.getCategory())
                 .properties(current.getProperties())
                 .statements(current.getStatements()).build();
 

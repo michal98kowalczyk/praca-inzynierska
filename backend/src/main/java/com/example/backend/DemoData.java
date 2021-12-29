@@ -1,7 +1,7 @@
 package com.example.backend;
 
-import com.example.backend.ontology.namespace.NameSpace;
-import com.example.backend.ontology.namespace.NameSpaceService;
+import com.example.backend.ontology.category.Category;
+import com.example.backend.ontology.category.CategoryService;
 import com.example.backend.ontology.resource.Resource;
 import com.example.backend.ontology.resource.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +16,17 @@ public class DemoData {
     private static final String SOURCE_CATEGORY = "Źródło";
     private static final String AUTOMATICALLY_PREDICTION = "Automatically prediction";
     @Autowired
-    private NameSpaceService ns;
+    private CategoryService ns;
 
     @Autowired
     private ResourceService resourceService;
 
     @EventListener
     public void appReady(ApplicationReadyEvent event){
-        NameSpace nameSpace = NameSpace.builder().name(SOURCE_CATEGORY).build();
-        NameSpace space = ns.addNameSpace(nameSpace);
+        Category category = Category.builder().name(SOURCE_CATEGORY).build();
+        Category space = ns.addCategory(category);
 
-        Resource resource = Resource.builder().name(AUTOMATICALLY_PREDICTION).nameSpace(ns.getNameSpace(SOURCE_CATEGORY)).build();
+        Resource resource = Resource.builder().name(AUTOMATICALLY_PREDICTION).category(ns.getCategory(SOURCE_CATEGORY)).build();
         resourceService.addResource(resource);
 
 

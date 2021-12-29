@@ -1,11 +1,7 @@
 package com.example.backend.ontology.property;
 
-import com.example.backend.ontology.namespace.NameSpace;
-import com.example.backend.ontology.resource.Resource;
 import com.example.backend.ontology.statement.StatementService;
-import com.example.backend.ontology.verb.Verb;
 import com.example.backend.ontology.wrapper.PropertyWrapper;
-import com.example.backend.ontology.wrapper.ResourceWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

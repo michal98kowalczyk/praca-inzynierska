@@ -7,7 +7,7 @@ const CategoryForm = () => {
     const [newCategory, setNewCategory] = useState("");
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/namespace')
+        fetch('http://localhost:8080/api/category')
             .then(response => response.json())
             .then(data => {
                 setCategories(data);
@@ -32,7 +32,7 @@ const CategoryForm = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(category)
         };
-        fetch('http://localhost:8080/api/namespace/add', requestOptions)
+        fetch('http://localhost:8080/api/category/add', requestOptions)
             .then(response => response.json())
             .then(data => {
                 setNewCategory("");

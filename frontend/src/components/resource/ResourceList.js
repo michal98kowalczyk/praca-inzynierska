@@ -4,7 +4,7 @@ import Resource from './Resource';
 const ResourceList = (props) => {
 
     const resources = props.resources.map(r => {
-        return <Resource key={r.id} id={r.id} name={r.name} category={r.namespace} categories={props.categories} />
+        return <Resource key={r.id} id={r.id} name={r.name} category={r.category} categories={props.categories} />
     });
     return (
 

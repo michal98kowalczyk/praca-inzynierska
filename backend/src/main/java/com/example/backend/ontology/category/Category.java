@@ -1,4 +1,4 @@
-package com.example.backend.ontology.namespace;
+package com.example.backend.ontology.category;
 
 import com.example.backend.ontology.resource.Resource;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -12,10 +12,10 @@ import java.util.List;
 @ToString
 @Builder
 @Entity
-@Table(name = "namespaces")
+@Table(name = "categories")
 @NoArgsConstructor
 @AllArgsConstructor
-public class NameSpace {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,6 @@ public class NameSpace {
     @NonNull
     private String name;
     @JsonManagedReference
-    @OneToMany(mappedBy = "nameSpace")
+    @OneToMany(mappedBy = "category")
     private List<Resource> resources;
 }

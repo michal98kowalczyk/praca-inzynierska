@@ -1,15 +1,10 @@
 package com.example.backend;
 
-import com.example.backend.ontology.namespace.NameSpace;
-import com.example.backend.ontology.namespace.NameSpaceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import javax.xml.stream.events.Namespace;
 
 @SpringBootApplication
 public class BackendApplication {
@@ -35,10 +30,10 @@ public class BackendApplication {
                 registry.addMapping("/api/resource/{name}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/resource/add").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/resource/{id}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
-                registry.addMapping("/api/namespace").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
-                registry.addMapping("/api/namespace/{name}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
-                registry.addMapping("/api/namespace/{id}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
-                registry.addMapping("/api/namespace/add").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+                registry.addMapping("/api/category").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+                registry.addMapping("/api/category/{name}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+                registry.addMapping("/api/category/{id}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+                registry.addMapping("/api/category/add").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/statement").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/statement/{id}/details").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/statement/{id}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");

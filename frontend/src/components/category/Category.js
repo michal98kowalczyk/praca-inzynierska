@@ -12,7 +12,7 @@ const Category = ({ id, name }) => {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*" }
         };
-        fetch(`http://localhost:8080/api/namespace/${id}`, requestOptions)
+        fetch(`http://localhost:8080/api/category/${id}`, requestOptions)
             .then(response => {
                 if (response.status === 200) {
                     alert("Kategorie Usunieto!");
@@ -48,7 +48,7 @@ const Category = ({ id, name }) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(category)
         };
-        fetch(`http://localhost:8080/api/namespace/${id}`, requestOptions)
+        fetch(`http://localhost:8080/api/category/${id}`, requestOptions)
             .then(response => {
                 if (response.status === 200) return response.json();
 
