@@ -34,7 +34,7 @@ public class StatementOutputWrapper {
 
     Long modelId;
 
-    Double probablity;
+    Double confidence;
 
     List<PropertyWrapper> properties;
 

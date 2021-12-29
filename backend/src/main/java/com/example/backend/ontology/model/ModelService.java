@@ -5,8 +5,6 @@ import com.example.backend.ontology.statement.StatementService;
 import com.example.backend.ontology.wrapper.ModelOutputWrapper;
 import com.example.backend.ontology.wrapper.StatementDetailsWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -102,17 +100,17 @@ public class ModelService {
 
         StatementDetailsWrapper result = new StatementDetailsWrapper();
         result.setCountOfPrediction(lstStatements.size());
-        result.setCountOfPositivePrediction(lstStatements.stream().filter(s -> s.getProbability()>=0).collect(Collectors.toList()).size());
-        result.setCountOfNegativePrediction(lstStatements.stream().filter(s -> s.getProbability()<0).collect(Collectors.toList()).size());
-        List<Double> probabilities = lstStatements.stream().map(s -> s.getProbability()).collect(Collectors.toList());
+        result.setCountOfPositivePrediction(lstStatements.stream().filter(s -> s.getConfidence()>=0).collect(Collectors.toList()).size());
+        result.setCountOfNegativePrediction(lstStatements.stream().filter(s -> s.getConfidence()<0).collect(Collectors.toList()).size());
+        List<Double> probabilities = lstStatements.stream().map(s -> s.getConfidence()).collect(Collectors.toList());
         System.out.println(probabilities);
-        result.setMinProbability(Collections.min(probabilities));
-        result.setMaxProbabilility(Collections.max(probabilities));
+        result.setMinConfidence(Collections.min(probabilities));
+        result.setMaxConfidence(Collections.max(probabilities));
         Double sum = probabilities.stream().reduce(0.0,Double::sum);
         Double avg = sum/probabilities.size();
         BigDecimal bd = new BigDecimal(avg).setScale(2, RoundingMode.HALF_UP);
         double newInput = bd.doubleValue();
-        result.setAvgProbabilility(newInput);
+        result.setAvgConfidence(newInput);
 
         return result;
     }

@@ -12,11 +12,8 @@ import com.example.backend.ontology.verb.Verb;
 import com.example.backend.ontology.verb.VerbService;
 import com.example.backend.ontology.wrapper.StatementOutputWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +21,7 @@ import java.util.Optional;
 @Service
 public class StatementService {
 
+    private static final String AUTOMATICALLY_PREDICTION = "Automatically prediction";
     @Autowired
     private StatementRepository statementRepository;
 
@@ -183,7 +181,7 @@ public class StatementService {
 
             for (Statement s : byResourceAsSubject) {
                 Statement statement = new Statement();
-                statement.setSource(resourceService.getExistResourceByName("Automatically prediction"));
+                statement.setSource(resourceService.getExistResourceByName(AUTOMATICALLY_PREDICTION));
                 statement.setModel(createdStatement.getModel());
                 // add to another model if resource was a model e.g kurczak szkodzi na cukrzyce ..
                 Resource rFromS = s.getResource();
@@ -195,10 +193,10 @@ public class StatementService {
                 statement.setSubject(createdStatement.getSubject());
                 statement.setPredicate(s.getPredicate());
                 statement.setResource(s.getResource());
-                Double d = s.getProbability() * createdStatement.getProbability();
+                Double d = s.getConfidence() * createdStatement.getConfidence();
                 int temp = (int)(d*100.0);
                 double shortDouble = ((double)temp)/100.0;
-                statement.setProbability(shortDouble);
+                statement.setConfidence(shortDouble);
 
                 toUpdate.add(statement);
 
@@ -211,7 +209,7 @@ public class StatementService {
 
         for (Statement s : bySubjectAsResource) {
             Statement statement = new Statement();
-            statement.setSource(resourceService.getExistResourceByName("Automatically prediction"));
+            statement.setSource(resourceService.getExistResourceByName(AUTOMATICALLY_PREDICTION));
             statement.setModel(createdStatement.getModel());
 
             // add to another model if resource was a model e.g cukrzyca szkodzi na reumatoidalne .. powinno byc dodane do modelu tego drugiego
@@ -226,10 +224,10 @@ public class StatementService {
             statement.setSubject(s.getSubject());
             statement.setPredicate(createdStatement.getPredicate());
             statement.setResource(createdStatement.getResource());
-            Double d = s.getProbability() * createdStatement.getProbability();
+            Double d = s.getConfidence() * createdStatement.getConfidence();
             int temp = (int) (d * 100.0);
             double shortDouble = ((double) temp) / 100.0;
-            statement.setProbability(shortDouble);
+            statement.setConfidence(shortDouble);
 
             toUpdate.add(statement);
 
@@ -283,7 +281,7 @@ public class StatementService {
 
 
     private Statement getEntityToUpdate(Statement current, Statement statementToUpdate) {
-        current.setProbability(statementToUpdate.getProbability());
+        current.setConfidence(statementToUpdate.getConfidence());
         return current;
     }
 
@@ -301,7 +299,7 @@ public class StatementService {
         statementOutputWrapper.setIsRes(statement.isRes());
         statementOutputWrapper.setLiteral(literalService.convert(statement.getLiteral()));
         statementOutputWrapper.setIsLit(statement.isLit());
-        statementOutputWrapper.setProbablity(statement.getProbability());
+        statementOutputWrapper.setConfidence(statement.getConfidence());
         statementOutputWrapper.setModelId(statement.getModel().getId());
         statementOutputWrapper.setProperties(propertyService.convert(propertyService.getByStatementId(statement.getId())));
         return statementOutputWrapper;

@@ -57,6 +57,6 @@ public class Statement {
 
     boolean isRes;
 
-    Double probability;
+    Double confidence;
 
 }

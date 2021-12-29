@@ -13,7 +13,8 @@ import org.springframework.stereotype.Component;
 public class DemoData {
 
 
-
+    private static final String SOURCE_CATEGORY = "Źródło";
+    private static final String AUTOMATICALLY_PREDICTION = "Automatically prediction";
     @Autowired
     private NameSpaceService ns;
 
@@ -22,10 +23,10 @@ public class DemoData {
 
     @EventListener
     public void appReady(ApplicationReadyEvent event){
-        NameSpace nameSpace = NameSpace.builder().name("Źródło").build();
+        NameSpace nameSpace = NameSpace.builder().name(SOURCE_CATEGORY).build();
         NameSpace space = ns.addNameSpace(nameSpace);
 
-        Resource resource = Resource.builder().name("Automatically prediction").nameSpace(ns.getNameSpace("Źródło")).build();
+        Resource resource = Resource.builder().name(AUTOMATICALLY_PREDICTION).nameSpace(ns.getNameSpace(SOURCE_CATEGORY)).build();
         resourceService.addResource(resource);
 
 

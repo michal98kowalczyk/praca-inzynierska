@@ -32,11 +32,13 @@ public class ResourceService {
     @Autowired
     private ResourcePropertyService resourcePropertyService;
 
+    private static final String SOURCE_CATEGORY = "Źródło";
+
     public List<Resource> getSources(){
 
         List<Resource> all = resourceRepository.findAll()
                 .stream()
-                .filter(resource -> resource.getNameSpace().getName().equals("Źródło"))
+                .filter(resource -> resource.getNameSpace().getName().equals(SOURCE_CATEGORY))
                 .collect(Collectors.toList());
         return all;
     }
@@ -45,7 +47,7 @@ public class ResourceService {
 
         List<Resource> all = resourceRepository.findAll()
                 .stream()
-                .filter(resource -> !resource.getNameSpace().getName().equals("Źródło"))
+                .filter(resource -> !resource.getNameSpace().getName().equals(SOURCE_CATEGORY))
                 .collect(Collectors.toList());
         return all;
     }

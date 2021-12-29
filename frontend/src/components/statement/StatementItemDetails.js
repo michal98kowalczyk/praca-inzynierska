@@ -49,16 +49,16 @@ const StatementItemDetails = ({ statement, closeDetails }) => {
 
                 {statement.isRes && <p><span>Obiekt</span> {statement.resource.name} </p>}
                 {statement.isLit && <p><span>Literał</span> {statement.literal.value} </p>}
-                <p><span>Wiarygodność</span> {statement.probablity}</p> <br />
+                <p><span>Wiarygodność</span> {statement.confidence}</p> <br />
                 <p>{properties}</p>
 
                 <section className='statementStats'>
                     <p><span>Łączna ilość predykcji:</span> {detailsWrapper !== null ? detailsWrapper.countOfPrediction : undefined}</p>
                     <p><span>Predykcje potwierdzające:</span> {detailsWrapper !== null ? detailsWrapper.countOfPositivePrediction : undefined}</p>
                     <p><span>Predykcje sprzeczne:</span> {detailsWrapper !== null ? detailsWrapper.countOfNegativePrediction : undefined}</p>
-                    <p><span>Wiarygodność minimalna:</span> {detailsWrapper !== null ? detailsWrapper.minProbability : undefined}</p>
-                    <p><span>Wiarygodność maksymalna:</span> {detailsWrapper !== null ? detailsWrapper.maxProbabilility : undefined}</p>
-                    <p><span>Wiarygodność średnia:</span> {detailsWrapper !== null ? detailsWrapper.avgProbabilility : undefined}</p>
+                    <p><span>Wiarygodność minimalna:</span> {detailsWrapper !== null ? detailsWrapper.minConfidence : undefined}</p>
+                    <p><span>Wiarygodność maksymalna:</span> {detailsWrapper !== null ? detailsWrapper.maxConfidence : undefined}</p>
+                    <p><span>Wiarygodność średnia:</span> {detailsWrapper !== null ? detailsWrapper.avgConfidence : undefined}</p>
                 </section>
 
             </section>
