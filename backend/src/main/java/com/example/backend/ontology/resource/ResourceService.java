@@ -118,7 +118,8 @@ public class ResourceService {
 
         List<Statement> statementsBySubjectId = statementService.getStatementsBySubjectId(Long.parseLong(id));
         List<Statement> statementsByResourceId = statementService.getStatementsByResourceId(Long.parseLong(id));
-        if (!statementsByResourceId.isEmpty() || !statementsBySubjectId.isEmpty())return null;
+        List<Statement> statementsBySourceId = statementService.getStatementsBySourceId(Long.parseLong(id));
+        if (!statementsByResourceId.isEmpty() || !statementsBySubjectId.isEmpty() || !statementsBySourceId.isEmpty())return null;
 
         resourcePropertyService.deleteProperties(res.get().getProperties());
         resourceRepository.delete(res.get());

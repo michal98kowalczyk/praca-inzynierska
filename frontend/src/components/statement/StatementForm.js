@@ -179,7 +179,7 @@ const StatementForm = () => {
         }
         if (literal !== "") {
             statement.literal = {
-                value: literal,
+                value: literal.trim(),
                 dataType: "string"
             }
         }

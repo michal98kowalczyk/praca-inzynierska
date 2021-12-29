@@ -15,4 +15,6 @@ public interface StatementRepository extends JpaRepository<Statement,Long> {
     List<Statement> findAllBySubjectId(Long id);
     List<Statement> findAllBySubjectIdAndPredicateIdAndResourceId(Long id1, Long id2, Long id3);
     List<Statement> findAllBySubjectIdAndPredicateIdAndLiteralId(Long id1, Long id2, Long id3);
+
+    List<Statement> findAllBySourceId(Long id);
 }

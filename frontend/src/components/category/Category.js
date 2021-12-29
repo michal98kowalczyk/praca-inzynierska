@@ -41,7 +41,7 @@ const Category = ({ id, name }) => {
             return;
         }
 
-        const category = { name: newCategory };
+        const category = { name: newCategory.trim() };
 
         const requestOptions = {
             method: 'PUT',

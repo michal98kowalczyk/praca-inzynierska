@@ -83,6 +83,10 @@ public class StatementService {
         return  statementRepository.findAllByResourceId(id);
     }
 
+    public List<Statement> getStatementsBySourceId(Long id) {
+        return  statementRepository.findAllBySourceId(id);
+    }
+
     public Statement getStatementById(String id) {
 
         Optional<Statement> byId = statementRepository.findById(Long.parseLong(id));

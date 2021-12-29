@@ -60,11 +60,11 @@ const SourceForm = () => {
         let mappedProperty = [];
 
         for (let keyTmp in properties) {
-            mappedProperty = [...mappedProperty, { key: keyTmp, value: properties[keyTmp] }];
+            mappedProperty = [...mappedProperty, { key: keyTmp.trim(), value: properties[keyTmp].trim() }];
         }
 
         const newSource = {
-            name: source,
+            name: source.trim(),
             nameSpace: { name: SOURCE_NAME },
             properties: mappedProperty
         };

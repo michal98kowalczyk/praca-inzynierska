@@ -1,6 +1,7 @@
 package com.example.backend.ontology.namespace;
 
 import com.example.backend.ontology.resource.Resource;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,7 +23,7 @@ public class NameSpace {
 
     @NonNull
     private String name;
-
+    @JsonManagedReference
     @OneToMany(mappedBy = "nameSpace")
     private List<Resource> resources;
 }
