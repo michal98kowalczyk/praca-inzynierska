@@ -4,6 +4,7 @@ import com.example.backend.ontology.statement.Statement;
 import com.example.backend.ontology.statement.StatementService;
 import com.example.backend.ontology.wrapper.ModelOutputWrapper;
 import com.example.backend.ontology.wrapper.StatementDetailsWrapper;
+import com.example.backend.ontology.wrapper.StatementOutputWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +51,7 @@ public class ModelService {
         return new ModelOutputWrapper().builder().id(model.getId()).name(model.getName()).statements(statementIds).build();
 
     }
+
 
     public Model addModel(Model model) {
         Optional<Model> modelFromDb = modelRepository.findByName(model.getName());
