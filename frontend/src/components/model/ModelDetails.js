@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import StatementList from '../statement/StatementList';
 
 const ModelDetails = () => {
+
     const { id, name } = useParams();
     const [statements, setStatements] = useState(null);
     const [isFiltered, setIsFiltered] = useState(false);
@@ -14,12 +15,16 @@ const ModelDetails = () => {
     const [currentVerbs, setCurrentVerbs] = useState(null);
 
     useEffect(() => {
+        console.log('czas pobrania stwierdzen ');
+        console.time("timer");
         fetch(`http://localhost:8080/api/model/${id}/statements`)
             .then(response => response.json())
             .then(data => {
                 setStatements(data);
             })
             .catch(err => console.log(err));
+        console.timeEnd("timer");
+
 
         fetch('http://localhost:8080/api/resources')
             .then(response => response.json())

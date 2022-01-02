@@ -198,7 +198,7 @@ public class StatementService {
         }
 
 
-        runPrediction(createdStatement);
+        //runPrediction(createdStatement);
 
         return createdStatement;
     }
