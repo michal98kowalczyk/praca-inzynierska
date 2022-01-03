@@ -43,8 +43,12 @@ const ModelDetails = () => {
 
     const applyFilter = (e) => {
         e.preventDefault();
+        console.log('id ' + id);
+        console.log('searchingSubject ' + searchingSubject);
+        console.log('searchingPredicate ' + searchingPredicate);
+        console.log('searchingResource ' + searchingResource);
         console.time("timer");
-        fetch(`http://localhost:8080/api/statement/${searchingSubject}/${searchingPredicate}/${searchingResource}`)
+        fetch(`http://localhost:8080/api/statement/${id}/${searchingSubject}/${searchingPredicate}/${searchingResource}`)
             .then(response => {
                 console.log(response);
                 if (response.status === 200) return response.json();

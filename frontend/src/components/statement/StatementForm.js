@@ -190,7 +190,7 @@ const StatementForm = () => {
             }
         }
         //console.log('statement ' + JSON.stringify(statement));
-
+        // console.log(JSON.stringify(statement));
 
         const requestOptions = {
             method: 'POST',

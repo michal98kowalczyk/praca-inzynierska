@@ -25,7 +25,7 @@ public class BackendApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
 
-                registry.addMapping("/api/statement/{subject}/{predicate}/{object}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+                registry.addMapping("/api/statement/{modelId}/{subject}/{predicate}/{object}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/models").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/model").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 registry.addMapping("/api/model/{id}").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");

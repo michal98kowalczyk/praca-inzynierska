@@ -67,29 +67,31 @@ public class StatementService {
 
     }
 
-    public List<Statement> getFilteredStatements(String subjectName, String predicateName, String resourceName){
+    public List<Statement> getFilteredStatements(String modelId,String subjectName, String predicateName, String resourceName){
         Resource subject = resourceService.getResource(subjectName);
         Verb verb = verbService.getVerb(predicateName);
         Resource resource = resourceService.getResource(resourceName);
+
+
 
 
         List<Statement> resultList;
         if(subject==null && verb==null && resource==null ){
             resultList = getStatements();
         }else if(subject!=null && verb!=null && resource!=null ){
-            resultList = statementRepository.findAllBySubjectIdAndPredicateIdAndResourceId(subject.getId(), verb.getId(), resource.getId());
+            resultList = statementRepository.findAllByModelIdAndSubjectIdAndPredicateIdAndResourceId(Long.parseLong(modelId),subject.getId(), verb.getId(), resource.getId());
         }else if(subject!=null && verb==null && resource==null){
-            resultList = statementRepository.findAllBySubjectId(subject.getId());
+            resultList = statementRepository.findAllByModelIdAndSubjectId(Long.parseLong(modelId),subject.getId());
         }else if(subject==null && verb!=null && resource==null){
-            resultList = statementRepository.findAllByPredicateId(verb.getId());
+            resultList = statementRepository.findAllByModelIdAndPredicateId(Long.parseLong(modelId),verb.getId());
         }else if(subject==null && verb==null && resource!=null){
-            resultList = statementRepository.findAllByResourceId(resource.getId());
+            resultList = statementRepository.findAllByModelIdAndResourceId(Long.parseLong(modelId),resource.getId());
         }else if(subject!=null && verb!=null && resource==null){
-            resultList = statementRepository.findAllBySubjectIdAndPredicateId(subject.getId(), verb.getId());
+            resultList = statementRepository.findAllByModelIdAndSubjectIdAndPredicateId(Long.parseLong(modelId),subject.getId(), verb.getId());
         }else if(subject!=null && verb==null && resource!=null){
-            resultList = statementRepository.findAllBySubjectIdAndResourceId(subject.getId(), resource.getId());
+            resultList = statementRepository.findAllByModelIdAndSubjectIdAndResourceId(Long.parseLong(modelId),subject.getId(), resource.getId());
         }else if(subject==null && verb!=null && resource!=null){
-            resultList = statementRepository.findAllByPredicateIdAndResourceId(verb.getId(), resource.getId());
+            resultList = statementRepository.findAllByModelIdAndPredicateIdAndResourceId(Long.parseLong(modelId),verb.getId(), resource.getId());
         }else{
             return null;
         }

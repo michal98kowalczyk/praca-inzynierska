@@ -43,13 +43,13 @@ public class StatementController {
         }
     }
 
-    @GetMapping("statement/{subject}/{predicate}/{object}")
-    public ResponseEntity getFilteredStatement(@PathVariable("subject") String subject, @PathVariable("predicate") String predicate, @PathVariable("object") String object) {
+    @GetMapping("statement/{modelId}/{subject}/{predicate}/{object}")
+    public ResponseEntity getFilteredStatement(@PathVariable("modelId") String modelId,@PathVariable("subject") String subject, @PathVariable("predicate") String predicate, @PathVariable("object") String object) {
         System.out.println("subject "+subject);
         System.out.println("predicate "+predicate);
         System.out.println("object "+object);
 
-        List<Statement> statements = statementService.getFilteredStatements(subject,predicate,object);
+        List<Statement> statements = statementService.getFilteredStatements(modelId,subject,predicate,object);
         if (statements.isEmpty()){
             return ResponseEntity.noContent().build();
         }else{
