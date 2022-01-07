@@ -3,6 +3,7 @@ package com.example.backend.ontology.model;
 import com.example.backend.ontology.statement.Statement;
 import com.example.backend.ontology.wrapper.ModelOutputWrapper;
 import com.example.backend.ontology.wrapper.StatementDetailsWrapper;
+import com.example.backend.ontology.wrapper.StatementOutputWrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,8 @@ public class ModelController {
             return ResponseEntity.ok(statementDetailsWrapper);
         }
     }
+
+
 
     @GetMapping("model/{name}")
     public ResponseEntity getModel(@PathVariable("name") String name) {
