@@ -1,0 +1,46 @@
+.statementDetailsWrapper{
+    background-color: rgba(184, 182, 182, 0.897);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+
+}
+
+.statementDetailsWrapper .statementItemDetails{
+    background-color: rgba(129, 129, 129, 0.514);
+    margin: 20% auto;
+    color: white;
+    
+
+}
+
+p span{
+    font-weight: bold;
+    color: black;}
+    
+.statementItemDetails div.closeButton{
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 50px;
+    height:50px;
+    cursor: pointer;
+}
+
+
+
+div.closeButton svg{
+    display: block !important;
+    color: rgb(83, 78, 78);
+    height: 100% !important;
+    width: 100% !important;
+    transition: .2s;
+}
+
+div.closeButton svg:hover{
+    color: rgb(22, 21, 21);
+    transform: rotate(90deg);
+}

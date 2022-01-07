@@ -16,7 +16,7 @@ const ModelForm = () => {
             return;
         }
 
-        const model = { name: modelName };
+        const model = { name: modelName.trim() };
 
         const requestOptions = {
             method: 'POST',

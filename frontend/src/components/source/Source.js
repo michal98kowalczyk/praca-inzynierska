@@ -40,7 +40,7 @@ const Source = ({ id, name, properties }) => {
         }
 
         const Source2Update = {
-            name: newSource
+            name: newSource.trim()
         };
 
         const requestOptions = {

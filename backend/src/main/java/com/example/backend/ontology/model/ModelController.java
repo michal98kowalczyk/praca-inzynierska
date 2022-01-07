@@ -1,6 +1,8 @@
 package com.example.backend.ontology.model;
 
+import com.example.backend.ontology.statement.Statement;
 import com.example.backend.ontology.wrapper.ModelOutputWrapper;
+import com.example.backend.ontology.wrapper.StatementDetailsWrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,17 @@ public class ModelController {
             return ResponseEntity.notFound().build();
         }else{
             return ResponseEntity.ok(modelOutputWrappers);
+        }
+    }
+
+    @GetMapping("statement/{id}/details")
+    public ResponseEntity getStatementDetails(@PathVariable("id") String statementId) {
+
+        StatementDetailsWrapper statementDetailsWrapper = modelService.getStatementDetails(statementId);
+        if (statementDetailsWrapper == null){
+            return ResponseEntity.notFound().build();
+        }else{
+            return ResponseEntity.ok(statementDetailsWrapper);
         }
     }
 

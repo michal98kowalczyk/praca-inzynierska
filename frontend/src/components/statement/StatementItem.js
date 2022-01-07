@@ -1,11 +1,14 @@
 import '../../styles/statement/StatementItem.css';
 import { useState } from 'react';
+import StatementItemDetails from './StatementItemDetails';
 
 
 
 const StatementItem = ({ statement }) => {
     const [isEdit, setIsEdit] = useState(false);
-    const [newProbability, setNewProbability] = useState(statement.probablity);
+    const [newConfidence, setnewConfidence] = useState(statement.confidence);
+    const [isDetails, setIsDetails] = useState(false);
+    const [isStats, setIsStats] = useState(false);
 
     const properties = statement.properties.map(property => <><span>{property.key} </span>{property.value} </>)
     const handleOnClick = (e) => {
@@ -31,14 +34,14 @@ const StatementItem = ({ statement }) => {
 
     const handleOnEditSubmit = (e) => {
         e.preventDefault();
-        if (newProbability < -1 || newProbability > 1) {
-            alert("Błędne probability");
+        if (newConfidence < -1 || newConfidence > 1) {
+            alert("Błędne confidence");
             return;
         }
 
         const statement2Update = {
 
-            probability: newProbability
+            confidence: newConfidence
         }
 
 
@@ -56,7 +59,7 @@ const StatementItem = ({ statement }) => {
             })
             .then(data => {
 
-                setNewProbability(statement.probablity);
+                setnewConfidence(statement.confidence);
                 window.location.reload(false);
             })
             .catch(err => console.log(err));
@@ -64,8 +67,15 @@ const StatementItem = ({ statement }) => {
 
 
     }
+    const showStats = () => {
+        setIsStats((prev) => !prev);
+    }
 
-    const handleOnNewProbabilityChange = (e) => setNewProbability(e.target.value);
+    const showStatementDetails = () => {
+        setIsDetails((prev) => !prev);
+    }
+
+    const handleOnnewConfidenceChange = (e) => setnewConfidence(e.target.value);
 
     const handleOnEditClick = () => setIsEdit(p => !p);
     const editForm = (
@@ -94,9 +104,9 @@ const StatementItem = ({ statement }) => {
 
             }
 
-            <label htmlFor="probability">wiarygodność
+            <label htmlFor="confidence">wiarygodność
             </label>
-            <input id="probability" type="number" step="0.01" min="-1" max="1" value={newProbability} onChange={handleOnNewProbabilityChange} />
+            <input id="confidence" type="number" step="0.01" min="-1" max="1" value={newConfidence} onChange={handleOnnewConfidenceChange} />
 
             <button onClick={handleOnEditSubmit}>Zatwierdź</button>
             <button onClick={handleOnEditClick}>Wróć</button>
@@ -112,17 +122,19 @@ const StatementItem = ({ statement }) => {
 
         {statement.isRes && <span>{statement.resource.name} </span>}
         {statement.isLit && <span>{statement.literal.value} </span>}
-        {statement.probablity}<br />
+        {statement.confidence}<br />
         {properties}
         <button onClick={handleOnEditClick}>Edytuj</button>
         <button onClick={handleOnClick}>Usun</button>
+        <button onClick={showStatementDetails}>Szczegóły</button>
     </li >
 
 
     return (
-
-        <> {isEdit ? editForm : statementItem}</>
-
+        <>
+            {isEdit ? editForm : statementItem}
+            {isDetails ? <StatementItemDetails statement={statement} closeDetails={setIsDetails} /> : undefined}
+        </>
     );
 }
 

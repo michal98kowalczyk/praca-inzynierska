@@ -49,7 +49,7 @@ const StatementForm = () => {
     const [source, setSource] = useState(sessionStorage.getItem('source') ? sessionStorage.getItem('source') : "-");
     const [resourceCategory, setResourceCategory] = useState(sessionStorage.getItem('resourceCategory') ? sessionStorage.getItem('resourceCategory') : "");
     const [literal, setLiteral] = useState("");
-    const [probability, setProbability] = useState();
+    const [confidence, setconfidence] = useState();
     const [properties, setProperties] = useState([{ key: "", value: "" }])
 
     let handleChange = (i, e) => {
@@ -83,9 +83,9 @@ const StatementForm = () => {
         sessionStorage.setItem('subject', e.target.value);
 
         let r = currentResources.find(r => r.name === e.target.value);
-        if (r && r.namespace != null) {
-            setSubjectCategory(r.namespace.name);
-            sessionStorage.setItem('subjectCategory', r.namespace.name);
+        if (r && r.category != null) {
+            setSubjectCategory(r.category.name);
+            sessionStorage.setItem('subjectCategory', r.category.name);
         }
     }
     const handleOnPredicateChange = (e) => {
@@ -97,16 +97,16 @@ const StatementForm = () => {
         sessionStorage.setItem('resource', e.target.value);
 
         let r = currentResources.find(r => r.name === e.target.value);
-        if (r && r.namespace != null) {
-            setResourceCategory(r.namespace.name);
-            sessionStorage.setItem('resourceCategory', r.namespace.name);
+        if (r && r.category != null) {
+            setResourceCategory(r.category.name);
+            sessionStorage.setItem('resourceCategory', r.category.name);
         }
     }
     const handleOnLiteralChange = (e) => {
         setLiteral(e.target.value);
     }
-    const handleOnProbabilityChange = (e) => {
-        setProbability(e.target.value);
+    const handleOnconfidenceChange = (e) => {
+        setconfidence(e.target.value);
     }
     const handleOnSubjectCategoryChange = (e) => {
         setSubjectCategory(e.target.value);
@@ -154,37 +154,39 @@ const StatementForm = () => {
         //     alert('wprowadz resource category');
         //     return;
         // }
-        if (probability === undefined) {
-            alert("Wprowadz probability");
+        if (confidence === undefined) {
+            alert("Wprowadz confidence");
             return;
         }
-        if (probability < -1 || probability > 1) {
-            alert("Błędne probability");
+        if (confidence < -1 || confidence > 1) {
+            alert("Błędne confidence");
             return;
         }
+
+
         const statement = {
             model: { name: modelName },
             properties: properties,
             subject: {
                 name: subject,
-                nameSpace: { name: subjectCategory }
+                category: { name: subjectCategory }
             },
             source: {
-                name: source.split(' |: ')[0].trim()
+                name: source.split(' |: ')[0].trim().replace('|:', '').trim()
             },
             predicate: { verb: predicate },
-            probability: probability
+            confidence: confidence
         }
         if (literal !== "") {
             statement.literal = {
-                value: literal,
+                value: literal.trim(),
                 dataType: "string"
             }
         }
         if (resource !== "" && resource !== "-") {
             statement.resource = {
                 name: resource,
-                nameSpace: { name: resourceCategory }
+                category: { name: resourceCategory }
             }
         }
         //console.log('statement ' + JSON.stringify(statement));
@@ -276,9 +278,9 @@ const StatementForm = () => {
             </label>
             <input id="literal" type="text" placeholder="literal" value={literal} onChange={handleOnLiteralChange} />
 
-            <label htmlFor="probability">wiarygodność
+            <label htmlFor="confidence">wiarygodność
             </label>
-            <input id="probability" type="number" step="0.01" min="-1" max="1" placeholder="probability" value={probability} onChange={handleOnProbabilityChange} />
+            <input id="confidence" type="number" step="0.01" min="-1" max="1" placeholder="confidence" value={confidence} onChange={handleOnconfidenceChange} />
 
 
             {properties.map((element, index) => (

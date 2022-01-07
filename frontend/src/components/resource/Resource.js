@@ -40,7 +40,7 @@ const Resource = ({ id, name, category, categories }) => {
         }
 
         const resource2Update = {
-            name: newResource
+            name: newResource.trim()
         };
 
         const requestOptions = {

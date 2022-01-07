@@ -34,7 +34,7 @@ public class LiteralService {
 
 
 
-    public Literal updateNameSpace(String id, Literal literalToUpdate) {
+    public Literal updateLiteral(String id, Literal literalToUpdate) {
         Optional<Literal> lCurrent = literalRepository.findById(Long.parseLong(id));
         Optional<Literal> byName = literalRepository.findByValueAndDataType(literalToUpdate.getValue(),literalToUpdate.getDataType());
         if (lCurrent.isPresent() && byName.isEmpty()){
@@ -56,6 +56,10 @@ public class LiteralService {
         }
 
         return literalRepository.save(literal);
+    }
+
+    public Literal getExistLiteralByValue(String value){
+        return literalRepository.findByValue(value).get();
     }
 
     public Literal getExistLiteralByValueAndDataType(Literal literal){

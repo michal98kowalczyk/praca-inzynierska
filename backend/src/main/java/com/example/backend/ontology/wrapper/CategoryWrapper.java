@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NameSpaceWrapper {
+public class CategoryWrapper {
     Long id;
     String name;
 }

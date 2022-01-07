@@ -1,5 +1,5 @@
 import '../../styles/source/SourceForm.css';
-import { useState, useEffect } from 'react';
+
 
 const AUTOR = 'Autor';
 const Title = 'Tytuł';
@@ -26,6 +26,10 @@ const OtherSourceForm = ({ onSourceChange, source, properties, propertyChange })
                 Tytuł
             </label>
             <input type="text" value={properties[Title]} onChange={(e) => propertyChange(Title, e.target.value)} placeholder="Tytuł" required />
+            <label>
+                Url
+            </label>
+            <input type="text" value={properties[URL]} onChange={(e) => propertyChange(URL, e.target.value)} placeholder="Url" required />
 
 
             <label>

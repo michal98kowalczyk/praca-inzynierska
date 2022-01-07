@@ -1,6 +1,7 @@
 package com.example.backend.ontology.model;
 
 import com.example.backend.ontology.statement.Statement;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,7 +23,7 @@ public class Model {
 
     @NonNull
     private String name;
-
+    @JsonManagedReference
     @OneToMany(mappedBy = "model")
     private List<Statement> statements;
 }

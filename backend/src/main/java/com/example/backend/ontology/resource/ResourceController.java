@@ -1,7 +1,5 @@
 package com.example.backend.ontology.resource;
 
-import com.example.backend.ontology.namespace.NameSpace;
-import com.example.backend.ontology.wrapper.NameSpaceWrapper;
 import com.example.backend.ontology.wrapper.ResourceWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

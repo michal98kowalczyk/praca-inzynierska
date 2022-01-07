@@ -35,7 +35,7 @@ public class PropertyController {
 
     @PostMapping("statement/{id}/property/add")
     public ResponseEntity<PropertyWrapper> addProperty(@PathVariable("id") String statementId, @RequestBody Property property){
-        System.out.println(property);
+
         Property p = propertyService.addProperty(statementId,property);
         if (p == null){
             return ResponseEntity.unprocessableEntity().build();
@@ -44,7 +44,7 @@ public class PropertyController {
     }
 
     @DeleteMapping("property/{id}")
-    public ResponseEntity<PropertyWrapper> deleteVerb(@PathVariable("id") String id) {
+    public ResponseEntity<PropertyWrapper> deleteProperty(@PathVariable("id") String id) {
         Property p = propertyService.deleteProperty(id);
         if (p == null){
             return ResponseEntity.notFound().build();
@@ -54,7 +54,7 @@ public class PropertyController {
 
 
     @PutMapping("property/{id}")
-    public ResponseEntity<PropertyWrapper> updateVerb(@PathVariable("id") String id, @RequestBody Property propertyToUpdate) {
+    public ResponseEntity<PropertyWrapper> updateProperty(@PathVariable("id") String id, @RequestBody Property propertyToUpdate) {
         Property p = propertyService.updateProperty(id, propertyToUpdate);
         if (p == null){
             return ResponseEntity.unprocessableEntity().build();

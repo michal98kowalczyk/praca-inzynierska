@@ -5,6 +5,7 @@ import com.example.backend.ontology.model.Model;
 import com.example.backend.ontology.property.Property;
 import com.example.backend.ontology.resource.Resource;
 import com.example.backend.ontology.verb.Verb;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,7 +25,7 @@ public class Statement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @JsonBackReference
     @ManyToOne
     private Model model;
 
@@ -56,6 +57,6 @@ public class Statement {
 
     boolean isRes;
 
-    Double probability;
+    Double confidence;
 
 }
